@@ -23,10 +23,11 @@ else
                             <ul class="list-group bg-secondary-subtle">
                                 @{
                                     void RenderGeneralListItem(string name) {
-                                        <li class="list-group-item">@name</li>
-                                    }
+                                    <li class="list-group-item">@name</li>
+                                }
 
-                                    RenderGeneralListItem($"Started at {game!.StartedAt!.Value.ToString("yyyy.MM.dd HH:mm")}");
+                                RenderGeneralListItem($"Started at {game!.StartedAt!.Value.ToString("yyyy.MM.dd HH:mm")}");
+                                RenderGeneralListItem(TrackedGameService.Maps.TryGetValue(game!.Map, out var mapName) ? mapName : "Map name not known");
 
                                     if(game.Drafting)
                                         RenderGeneralListItem("Drafting");

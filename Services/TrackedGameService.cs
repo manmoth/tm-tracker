@@ -5,7 +5,7 @@ using TmTracker.Models;
 
 namespace TmTracker.Services;
 
-public class TrackedGameService(TableServiceClient tableServiceClient)
+public class TrackedGameService(TableServiceClient tableServiceClient, IHostEnvironment hostEnvironment)
 {
     const string GamesTableName = "tmtrackergames";
     public static readonly IDictionary<int, string> Maps = new Dictionary<int, string> { 
@@ -18,7 +18,7 @@ public class TrackedGameService(TableServiceClient tableServiceClient)
         { 7, "Amazonis Planitia" } 
     };
 
-    private TableClient CreateTableClient() => tableServiceClient.GetTableClient(GamesTableName);
+    private TableClient CreateTableClient() => tableServiceClient.GetTableClient(GamesTableName + hostEnvironment.EnvironmentName);
 
     public async Task CreateGame(TrackedGame? game) {
 

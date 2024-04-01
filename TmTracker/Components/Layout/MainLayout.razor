@@ -5,14 +5,18 @@
         <NavMenu />
     </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+    <main class="d-flex flex-column">
+        <div class="container-fluid">
+            <article class="px-4">
+                @Body
+            </article>
         </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
+        <footer class="mt-auto">
+            <div class="container-fluid">
+                <p class="text-center text-muted">Contains AI generated art.</p>
+            </div>
+        </footer>
     </main>
 </div>
 

@@ -1,0 +1,136 @@
+﻿@page "/games"
+@rendermode InteractiveServer
+@inject TrackedGameService TrackedGameService
+@attribute [StreamRendering]
+
+<PageTitle>Games</PageTitle>
+
+@if (games == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="container text-center mt-3 gap-3 text-light">
+    @foreach (var game in games)
+    {
+        <div class="row">
+                <div class="col">
+                        <div class="row">
+                            <div class="row text-nowrap"><h3>General</h3></div>
+                        </div>
+                        <div class="row">
+                            <ul class="list-group bg-secondary-subtle">
+                                @{
+                                    void RenderGeneralListItem(string name) {
+                                        <li class="list-group-item">@name</li>
+                                    }
+
+                                    RenderGeneralListItem($"Started at {game!.StartedAt!.Value.ToString("yyyy.MM.dd HH:mm")}");
+
+                                    if(game.Drafting)
+                                        RenderGeneralListItem("Drafting");
+                                }
+                            </ul>
+                        </div>
+                </div>
+                <div class="col">
+                    <div class="container text-center">
+                        <div class="row">
+                            <div class="row text-nowrap"><h3>Expansions</h3></div>
+                        </div>
+                        <div class="row">
+                            <ul class="list-group">
+                                @{
+                                    void RenderExpansionListItem(string name) {
+                                        <li class="list-group-item">@name</li>
+                                    }
+
+                                    if(game.CorporateEra)
+                                        RenderExpansionListItem("Corporate Era");
+                                    if(game.Prelude)
+                                        RenderExpansionListItem("Prelude");
+                                    if(game.Promos)
+                                        RenderExpansionListItem("Promos");
+                                    if(game.Colonies)
+                                        RenderExpansionListItem("Colonies");
+                                    if(game.VenusNext)
+                                        RenderExpansionListItem("Venus Next");
+                                    if(game.Turmoil)
+                                        RenderExpansionListItem("Turmoil");
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="container text-center">
+                        <div class="row">
+                            <div class="row text-nowrap"><h3>Players</h3></div>
+                        </div>
+                        <div class="row">                                
+                            <ul class="list-group">
+                                @{
+                                    void RenderPlayerListItem(string name) {
+                                        <li class="list-group-item">@name</li>
+                                    }
+
+                                    if(game.JV)
+                                        RenderPlayerListItem("JV");
+                                    if(game.T)
+                                        RenderPlayerListItem("T");
+                                    if(game.GM)
+                                        RenderPlayerListItem("GM");
+                                    if(game.H)
+                                        RenderPlayerListItem("H");
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="container text-center">
+                        <div class="row">
+                            <div class="row text-nowrap"><h3>Results</h3></div>
+                        </div>
+                        <div class="row">                                
+                            <ul class="list-group">
+                                @{
+                                    void RenderResultListItem(string value) {
+                                        <li class="list-group-item">@value</li>
+                                    }
+
+                                    void RenderButton() {
+                                        <li class="list-group-item"><button type="button" @onclick="() => OnEndGame(game)">End game</button></li>
+                                    }
+
+                                    if(game.EndedAt.HasValue) {
+                                        var time = new DateTime(game.EndedAt.Value.Subtract(game.StartedAt.Value).Ticks);
+                                        RenderResultListItem($"Lasted {time.Hour}h {time.Minute}m");
+                                    }
+                                    else 
+                                        RenderButton();
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private IList<TrackedGame>? games;
+
+    protected override async Task OnInitializedAsync()
+    {
+        games = (await TrackedGameService.GetGames()).OrderByDescending(g => g.StartedAt).ToList();
+    }
+
+    public async Task OnEndGame(TrackedGame game)
+	{
+        await TrackedGameService.EndGame(game);
+        games = (await TrackedGameService.GetGames()).OrderByDescending(g => g.StartedAt).ToList();
+	}
+}

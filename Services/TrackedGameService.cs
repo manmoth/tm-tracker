@@ -1,10 +1,11 @@
 using System.Collections;
 using Azure.Data.Tables;
+using Azure.Identity;
 using TmTracker.Models;
 
 namespace TmTracker.Services;
 
-public class TrackedGameService(IConfiguration configuration)
+public class TrackedGameService(TableServiceClient tableServiceClient)
 {
     const string GamesTableName = "tmtrackergames";
     public static readonly IDictionary<int, string> Maps = new Dictionary<int, string> { 
@@ -17,36 +18,31 @@ public class TrackedGameService(IConfiguration configuration)
         { 7, "Amazonis Planitia" } 
     };
 
+    private TableClient CreateTableClient() => tableServiceClient.GetTableClient(GamesTableName);
+
     public async Task CreateGame(TrackedGame? game) {
 
         if(game is null)
             return;
 
-        var client = new TableClient(
-            configuration.GetConnectionString("AzureTableStorage"),
-            GamesTableName);
-
-        await client.CreateIfNotExistsAsync();
-        await client.AddEntityAsync(game with { PartitionKey = "games", RowKey = Guid.NewGuid().ToString() });
+        var tableClient = CreateTableClient();
+        await tableClient.CreateIfNotExistsAsync();
+        await tableClient.AddEntityAsync(game with { PartitionKey = "games", RowKey = Guid.NewGuid().ToString() });
     }
 
     public async Task<IEnumerable<TrackedGame>> GetGames() {
-        var client = new TableClient(
-            configuration.GetConnectionString("AzureTableStorage"),
-            GamesTableName);
+        var tableClient = CreateTableClient();
 
-        await client.CreateIfNotExistsAsync();
-        return client.Query<TrackedGame>(filter: $"PartitionKey eq 'games'").ToList();
+        await tableClient.CreateIfNotExistsAsync();
+        return tableClient.Query<TrackedGame>(filter: $"PartitionKey eq 'games'").ToList();
     }
 
     public async Task EndGame(TrackedGame? game) {
         if(game is null)
             return;
 
-        var client = new TableClient(
-            configuration.GetConnectionString("AzureTableStorage"),
-            GamesTableName);
+        var tableClient = CreateTableClient();
 
-        await client.UpdateEntityAsync(game with { EndedAt = DateTime.UtcNow }, game.ETag);
+        await tableClient.UpdateEntityAsync(game with { EndedAt = DateTime.UtcNow }, game.ETag);
     }
 }

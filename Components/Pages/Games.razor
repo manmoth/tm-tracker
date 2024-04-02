@@ -9,6 +9,56 @@
 {
     <p><em>Loading...</em></p>
 }
+else if(selectedGame != null) {
+    <div class="container text-center mt-3 gap-3 text-light">
+        <form method="post" @onsubmit="SubmitGameScores" @formname="set-game-scores-form">
+            <AntiforgeryToken />
+            <div class="row">
+                @{
+                    if(selectedGame.JV){
+                        <div class="col-2">
+                            <label class="form-label" for="jvInput">
+                                JV
+                            </label>
+                            <InputNumber @bind-Value="SelectedGameScores!.JV" class="form-control" type="checkbox" id="jvInput" max="200" />
+                        </div>
+                    }
+                    if(selectedGame.H){
+                        <div class="col-2">
+                            <label class="form-label" for="hInput">
+                                H
+                            </label>
+                            <InputNumber @bind-Value="SelectedGameScores!.H" class="form-control" type="checkbox" id="hInput" max="200" />
+                        </div>
+                    }
+                    if(selectedGame.GM){
+                        <div class="col-2">
+                            <label class="form-label" for="gmInput">
+                                GM
+                            </label>
+                            <InputNumber @bind-Value="SelectedGameScores!.GM" class="form-control" type="checkbox" id="gmInput" max="200" />
+                        </div>
+                    }
+                    if(selectedGame.T){
+                        <div class="col-2">
+                            <label class="form-label" for="tInput">
+                                T
+                            </label>
+                            <InputNumber @bind-Value="SelectedGameScores!.T" class="form-control" type="checkbox" id="tInput" max="200" />
+                        </div>
+                    }
+                }
+            </div>
+            <div class="row mt-3">
+                <div class="row">
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}
 else
 {
     <div class="container text-center mt-3 gap-3 text-light">
@@ -23,11 +73,11 @@ else
                             <ul class="list-group bg-secondary-subtle">
                                 @{
                                     void RenderGeneralListItem(string name) {
-                                    <li class="list-group-item">@name</li>
-                                }
+                                        <li class="list-group-item">@name</li>
+                                    }
 
-                                RenderGeneralListItem($"Started at {game!.StartedAt!.Value.ToString("yyyy.MM.dd HH:mm")}");
-                                RenderGeneralListItem(TrackedGameService.Maps.TryGetValue(game!.Map, out var mapName) ? mapName : "Map name not known");
+                                    RenderGeneralListItem($"Started at {game!.StartedAt!.Value.ToString("yyyy.MM.dd HH:mm")}");
+                                    RenderGeneralListItem(TrackedGameService.Maps.TryGetValue(game!.Map, out var mapName) ? mapName : "Map name not known");
 
                                     if(game.Drafting)
                                         RenderGeneralListItem("Drafting");
@@ -72,18 +122,23 @@ else
                         <div class="row">                                
                             <ul class="list-group">
                                 @{
-                                    void RenderPlayerListItem(string name) {
-                                        <li class="list-group-item">@name</li>
+                                    var gs = gameScores?.FirstOrDefault(g => g.GameRowKey == game.RowKey);
+                                    var winnerPoints = new [] { gs?.JV, gs?.H, gs?.T, gs?.GM }.Max();
+                                    string Points(string name, int? points)
+                                        => $"{(winnerPoints.HasValue && points == winnerPoints ? "🏆" : "")} {name} {(points != null ? $"{points} points" : "")}";
+
+                                    void RenderPlayerListItem(string name, int? points) {
+                                        <li class="list-group-item">@Points(name, points)</li>
                                     }
 
                                     if(game.JV)
-                                        RenderPlayerListItem("JV");
+                                        RenderPlayerListItem("JV", gs?.JV );
                                     if(game.T)
-                                        RenderPlayerListItem("T");
+                                        RenderPlayerListItem("T", gs?.T);
                                     if(game.GM)
-                                        RenderPlayerListItem("GM");
+                                        RenderPlayerListItem("GM", gs?.GM);
                                     if(game.H)
-                                        RenderPlayerListItem("H");
+                                        RenderPlayerListItem("H", gs?.H);
                                 }
                             </ul>
                         </div>
@@ -101,16 +156,31 @@ else
                                         <li class="list-group-item">@value</li>
                                     }
 
-                                    void RenderButton() {
-                                        <li class="list-group-item"><button type="button" @onclick="() => OnEndGame(game)">End game</button></li>
+                                    void RenderEndGameButton() {
+                                        <li class="list-group-item">
+                                            <button type="button" class="btn btn-secondary" @onclick="() => OnEndGame(game)">
+                                                End game
+                                            </button>
+                                        </li>
+                                    }
+
+                                    void RenderSetScoresButton() {
+                                        <li class="list-group-item">
+                                            <button type="button" class="btn btn-secondary" @onclick="() => OnSetSelectedGame(game)">
+                                                Set scores
+                                            </button>
+                                        </li>
                                     }
 
                                     if(game.EndedAt.HasValue) {
                                         var time = new DateTime(game.EndedAt.Value.Subtract(game.StartedAt.Value).Ticks);
                                         RenderResultListItem($"Lasted {time.Hour}h {time.Minute}m");
+                                        if((DateTime.UtcNow - game.EndedAt) < TimeSpan.FromHours(4)) {
+                                            RenderSetScoresButton();
+                                        }
                                     }
-                                    else 
-                                        RenderButton();
+                                    else
+                                        RenderEndGameButton();
                                 }
                             </ul>
                         </div>
@@ -122,11 +192,16 @@ else
 }
 
 @code {
+    [SupplyParameterFromForm(FormName = "set-game-scores-form")]
+    public GameScores? SelectedGameScores { get; set; }
     private IList<TrackedGame>? games;
+    private IList<GameScores>? gameScores;
+    private TrackedGame? selectedGame { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         games = (await TrackedGameService.GetGames()).OrderByDescending(g => g.StartedAt).ToList();
+        gameScores = (await TrackedGameService.GetGameScores()).ToList();
     }
 
     public async Task OnEndGame(TrackedGame game)
@@ -134,4 +209,17 @@ else
         await TrackedGameService.EndGame(game);
         games = (await TrackedGameService.GetGames()).OrderByDescending(g => g.StartedAt).ToList();
 	}
+    
+    public void OnSetSelectedGame(TrackedGame game)
+	{
+        selectedGame = game;
+        SelectedGameScores = gameScores?.First(s => s.GameRowKey == game.RowKey);
+	}
+
+    public async Task SubmitGameScores() {
+        await TrackedGameService.SetGameScores(SelectedGameScores);
+        gameScores = (await TrackedGameService.GetGameScores()).ToList();
+        selectedGame = null;
+        SelectedGameScores = null;
+    }
 }

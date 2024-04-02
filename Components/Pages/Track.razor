@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject TrackedGameService TrackedGameService
+@inject NavigationManager NavigationManager
 
 <PageTitle>Track game</PageTitle>
 
@@ -166,5 +167,6 @@
             Game.StartedAt = DateTime.UtcNow;
 
         await TrackedGameService.CreateGame(Game);
+        NavigationManager.NavigateTo("/games", false);
     }
 }

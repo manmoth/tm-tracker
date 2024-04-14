@@ -11,13 +11,11 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddTransient<TrackedGameService>();
 
-builder.Services.AddSingleton(_ => {
-        var tableEndpoint = Environment.GetEnvironmentVariable("AZURE_STORAGETABLE_RESOURCEENDPOINT")!;
+builder.Services.AddSingleton(s => {
+        var tableConnStr = s.GetRequiredService<IConfiguration>().GetValue<string>("ConnectionStrings:AzureCosmosDb");
         var credential = new DefaultAzureCredential();
 
-        return new TableServiceClient(
-        new Uri(tableEndpoint),
-        credential);
+        return new TableServiceClient(tableConnStr);
 });
 
 var app = builder.Build();

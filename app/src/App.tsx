@@ -1,11 +1,11 @@
 import './App.css'
-import AppBar from './AppBar'
+import TmAppBar from './TmAppBar'
 import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <AppBar />
+      <TmAppBar />
       <Outlet />
     </>
   )

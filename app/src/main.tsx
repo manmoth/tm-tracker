@@ -12,13 +12,18 @@ import {
 import ErrorPage from './ErrorPage.tsx'
 import Games from './Games.tsx'
 import Track from './Track.tsx'
+import { QueryClient, QueryClientProvider } from 'react-query'
+
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </ThemeProvider>,
     errorElement: <ErrorPage />,
     children: [

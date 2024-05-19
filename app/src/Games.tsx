@@ -1,4 +1,4 @@
-import { Card, Chip, Divider, Grid, Typography } from "@mui/material";
+import { Chip, Divider, Grid, Paper, Typography } from "@mui/material";
 import { useQuery } from "react-query"
 import MapIcon from '@mui/icons-material/Map';
 import LoopIcon from '@mui/icons-material/Loop';
@@ -13,6 +13,12 @@ interface Game {
   t: boolean;
   startedAt: string;
   endedAt: string;
+  promos: boolean;
+  corporateEra: boolean;
+  colonies: boolean;
+  prelude: boolean;
+  venusNext: boolean;
+  turmoil: boolean;
 }
 
 interface GameScores {
@@ -51,15 +57,19 @@ async function fetchGameScores(): Promise<GameScores[]> {
   return await response.json() as GameScores[];
 }
 
-function isTopScore(score: number, scores: GameScores) {
-  return score === Math.max(scores.jv, scores.h, scores.gm, scores.t);
+function isTopScore(score: number, scores?: GameScores) {
+  return score === Math.max(scores?.jv ?? 0, scores?.h ?? 0, scores?.gm ?? 0, scores?.t ?? 0);
 }
 
-function RenderScore(name: string, played: boolean, score: number, isTopScore: boolean) {
+function RenderScore(name: string, score: number, isTopScore: boolean) {
   return <>
-    <Chip label={`👨‍🚀${name}`} color={played ? "info" : "default"} sx={{  display: "inline-flex", m: 1, fontSize: 20 }} />
-    <Typography variant="h4" component="h4">{isTopScore ? "🏆" : ""}{score}</Typography>
+    <Typography variant="h5" component="h5" sx={{ m: 1 }}>{`👨‍🚀${name}`}</Typography>
+    <Typography variant="h4" component="h4" sx={{ m: 1 }}>{isTopScore ? "🏆" : ""}{score}</Typography>
   </>;
+}
+
+function RenderExpansion(name: string, played: boolean) {
+  return <Chip label={name} color={played ? "info" : "default"} sx={{ display: "inline-flex", m: 1 }} variant={played ? "filled" : "outlined"} />;
 }
 
 function GameCard(game: Game, scores?: GameScores) {
@@ -67,13 +77,12 @@ function GameCard(game: Game, scores?: GameScores) {
   const endedAtDate = new Date(game.endedAt);
   const lastedDate = new Date(endedAtDate.getTime() - startedAtDate.getTime());
   return (
-  <Card>
-    <Divider>General</Divider>
-    <Typography variant="h6" component="h6">Started {startedAtDate.toLocaleDateString("nb-NO")} {startedAtDate.toLocaleTimeString("nb-NO")}</Typography>
+  <Paper elevation={12} square={false}>
+    <Divider><Typography variant="h5" component="h5">{startedAtDate.toLocaleDateString("nb-NO", { dateStyle: "short" })} at {startedAtDate.toLocaleTimeString("nb-NO", { hour: "2-digit", minute: "2-digit" })}</Typography></Divider>
     <Typography variant="h6" component="h6">Lasted {lastedDate.getHours()}h {lastedDate.getMinutes()}m</Typography>
-    <Chip icon={<MapIcon />} label={mapNames[game.map]} color="info" sx={{ display: "inline-flex", m: 1 }} />
-    <Chip icon={<LoopIcon />} label="Drafting" color={game.drafting ? "info" : "default"} sx={{ display: "inline-flex", m: 1 }} />
-    <Divider>Players & Points</Divider>
+    <Chip icon={<MapIcon />} label={mapNames[game.map]} color="info" sx={{ display: "inline-flex", m: 1 }} variant="filled" />
+    <Chip icon={<LoopIcon />} label="Drafting" color={game.drafting ? "info" : "default"} sx={{ display: "inline-flex", m: 1 }} variant={game.drafting ? "filled" : "outlined"} />
+    <Divider><Typography variant="h5" component="h5">Players & Points</Typography></Divider>
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
       {
         [
@@ -83,11 +92,20 @@ function GameCard(game: Game, scores?: GameScores) {
           { name: "T", score: scores?.t ?? 0, played: game.t }
         ]
         .sort((a, b) => b.score - a.score)
-        .map(player => (<Grid key={player.name} xs={3}>{RenderScore(player.name, player.played, player.score, isTopScore(player.score, scores!))}</Grid>))
+        .map(player => (player.played ? <Grid key={player.name} xs={3}>{RenderScore(player.name, player.score, isTopScore(player.score, scores))}</Grid> : <></>))
       }
     </Grid>
     <Divider>Expansions</Divider>
-  </Card>);
+    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
+      <Grid xs={4}>{RenderExpansion("Promos", game.promos)}</Grid>
+      <Grid xs={4}>{RenderExpansion("Corporate Era", game.corporateEra)}</Grid>
+      <Grid xs={4}>{RenderExpansion("Prelude", game.prelude)}</Grid>
+      <Grid xs={4}>{RenderExpansion("Colonies", game.colonies)}</Grid>
+      <Grid xs={4}>{RenderExpansion("Venus Next", game.venusNext)}</Grid>
+      <Grid xs={4}>{RenderExpansion("Turmoil", game.turmoil)}</Grid>
+    </Grid>
+
+  </Paper>);
 }
 
 function Games() {

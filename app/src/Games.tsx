@@ -1,4 +1,4 @@
-import { Chip, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Chip, Container, Divider, Grid, Paper, Typography } from "@mui/material";
 import { useQuery } from "react-query"
 import MapIcon from '@mui/icons-material/Map';
 import LoopIcon from '@mui/icons-material/Loop';
@@ -77,7 +77,7 @@ function GameCard(game: Game, scores?: GameScores) {
   const endedAtDate = new Date(game.endedAt);
   const lastedDate = new Date(endedAtDate.getTime() - startedAtDate.getTime());
   return (
-  <Paper elevation={12} square={false}>
+  <Paper key={game.startedAt} elevation={12} square={false}>
     <Divider><Typography variant="h5" component="h5">{startedAtDate.toLocaleDateString("nb-NO", { dateStyle: "short" })} at {startedAtDate.toLocaleTimeString("nb-NO", { hour: "2-digit", minute: "2-digit" })}</Typography></Divider>
     <Typography variant="h6" component="h6">Lasted {lastedDate.getHours()}h {lastedDate.getMinutes()}m</Typography>
     <Chip icon={<MapIcon />} label={mapNames[game.map]} color="info" sx={{ display: "inline-flex", m: 1 }} variant="filled" />
@@ -92,17 +92,17 @@ function GameCard(game: Game, scores?: GameScores) {
           { name: "T", score: scores?.t ?? 0, played: game.t }
         ]
         .sort((a, b) => b.score - a.score)
-        .map(player => (player.played ? <Grid key={player.name} xs={3}>{RenderScore(player.name, player.score, isTopScore(player.score, scores))}</Grid> : <></>))
+        .map(player => (player.played ? <Grid item key={player.name} xs={3}>{RenderScore(player.name, player.score, isTopScore(player.score, scores))}</Grid> : <></>))
       }
     </Grid>
     <Divider>Expansions</Divider>
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
-      <Grid xs={4}>{RenderExpansion("Promos", game.promos)}</Grid>
-      <Grid xs={4}>{RenderExpansion("Corporate Era", game.corporateEra)}</Grid>
-      <Grid xs={4}>{RenderExpansion("Prelude", game.prelude)}</Grid>
-      <Grid xs={4}>{RenderExpansion("Colonies", game.colonies)}</Grid>
-      <Grid xs={4}>{RenderExpansion("Venus Next", game.venusNext)}</Grid>
-      <Grid xs={4}>{RenderExpansion("Turmoil", game.turmoil)}</Grid>
+      <Grid item key={"promos"} xs={4}>{RenderExpansion("Promos", game.promos)}</Grid>
+      <Grid item key={"corpEra"} xs={4}>{RenderExpansion("Corporate Era", game.corporateEra)}</Grid>
+      <Grid item key={"prelude"} xs={4}>{RenderExpansion("Prelude", game.prelude)}</Grid>
+      <Grid item key={"colonies"} xs={4}>{RenderExpansion("Colonies", game.colonies)}</Grid>
+      <Grid item key={"venusNext"} xs={4}>{RenderExpansion("Venus Next", game.venusNext)}</Grid>
+      <Grid item key={"turmoil"} xs={4}>{RenderExpansion("Turmoil", game.turmoil)}</Grid>
     </Grid>
 
   </Paper>);
@@ -117,14 +117,14 @@ function Games() {
     }
 
     return (
-      <>
+      <Container maxWidth="false">
         <h1>Previous Games</h1>
         {gamesQuery.data?.map((game: Game) => {
           const scores = gameScoresQuery.data?.find(scores => scores.gameId == game.id);
 
           return GameCard(game, scores);
         })}
-      </>
+      </Container>
     )
   }
   

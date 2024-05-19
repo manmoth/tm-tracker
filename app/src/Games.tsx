@@ -63,9 +63,9 @@ function RenderScore(name: string, played: boolean, score: number, isTopScore: b
 }
 
 function GameCard(game: Game, scores?: GameScores) {
-  var startedAtDate = new Date(game.startedAt);
-  var endedAtDate = new Date(game.endedAt);
-  var lastedDate = new Date(endedAtDate.getTime() - startedAtDate.getTime());
+  const startedAtDate = new Date(game.startedAt);
+  const endedAtDate = new Date(game.endedAt);
+  const lastedDate = new Date(endedAtDate.getTime() - startedAtDate.getTime());
   return (
   <Card>
     <Divider>General</Divider>
@@ -77,13 +77,13 @@ function GameCard(game: Game, scores?: GameScores) {
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
       {
         [
-          { name: "JV", score: scores?.jv || 0, played: game.jv },
-          { name: "H", score: scores?.h || 0, played: game.h },
-          { name: "GM", score: scores?.gm || 0, played: game.gm },
-          { name: "T", score: scores?.t || 0, played: game.t }
+          { name: "JV", score: scores?.jv ?? 0, played: game.jv },
+          { name: "H", score: scores?.h ?? 0, played: game.h },
+          { name: "GM", score: scores?.gm ?? 0, played: game.gm },
+          { name: "T", score: scores?.t ?? 0, played: game.t }
         ]
         .sort((a, b) => b.score - a.score)
-        .map(player => (<Grid xs={3}>{RenderScore(player.name, player.played, player.score, isTopScore(player.score, scores!))}</Grid>))
+        .map(player => (<Grid key={player.name} xs={3}>{RenderScore(player.name, player.played, player.score, isTopScore(player.score, scores!))}</Grid>))
       }
     </Grid>
     <Divider>Expansions</Divider>

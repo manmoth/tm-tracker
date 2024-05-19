@@ -1,36 +1,7 @@
-import { Box, Card, Chip, CircularProgress, CircularProgressProps, Divider, Typography } from "@mui/material";
+import { Card, Chip, Divider, Grid, Typography } from "@mui/material";
 import { useQuery } from "react-query"
-import FaceIcon from '@mui/icons-material/Face';
 import MapIcon from '@mui/icons-material/Map';
 import LoopIcon from '@mui/icons-material/Loop';
-
-function CircularProgressWithLabel(
-  props: CircularProgressProps & { value: number, absoluteNumber?: number },
-) {
-  return (
-    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-      <CircularProgress variant="determinate" {...props} />
-      <Box
-        sx={{
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          position: 'absolute',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Typography
-          variant="caption"
-          component="div"
-          color="text.secondary"
-        >{`${Math.round(props.absoluteNumber ?? 0)}`}</Typography>
-      </Box>
-    </Box>
-  );
-}
 
 interface Game {
   id: string;
@@ -40,6 +11,8 @@ interface Game {
   h: boolean;
   gm: boolean;
   t: boolean;
+  startedAt: string;
+  endedAt: string;
 }
 
 interface GameScores {
@@ -78,36 +51,41 @@ async function fetchGameScores(): Promise<GameScores[]> {
   return await response.json() as GameScores[];
 }
 
-function getMaxScore(scores: GameScores) {
-  return Math.max(scores.jv, scores.h, scores.gm, scores.t);
+function isTopScore(score: number, scores: GameScores) {
+  return score === Math.max(scores.jv, scores.h, scores.gm, scores.t);
 }
 
-function getPercentagesOfMaxScore(scores: GameScores | undefined) {
-  if(!scores)
-    return { jv: 0, h: 0, gm: 0, t: 0 };
-
-  const maxScore = getMaxScore(scores);
-  return { jv: scores.jv / maxScore * 100, h: scores.h / maxScore * 100, gm: scores.gm / maxScore * 100, t: scores.t / maxScore * 100 };
+function RenderScore(name: string, played: boolean, score: number, isTopScore: boolean) {
+  return <>
+    <Chip label={`👨‍🚀${name}`} color={played ? "info" : "default"} sx={{  display: "inline-flex", m: 1, fontSize: 20 }} />
+    <Typography variant="h4" component="h4">{isTopScore ? "🏆" : ""}{score}</Typography>
+  </>;
 }
 
 function GameCard(game: Game, scores?: GameScores) {
-  const percentagesOfMaxScore = getPercentagesOfMaxScore(scores);
+  var startedAtDate = new Date(game.startedAt);
+  var endedAtDate = new Date(game.endedAt);
+  var lastedDate = new Date(endedAtDate.getTime() - startedAtDate.getTime());
   return (
   <Card>
     <Divider>General</Divider>
-    <Chip icon={<MapIcon />} label={mapNames[game.map]} color="info" sx={{ m: 1 }} />
-    <Chip icon={<LoopIcon />} label="Drafting" color={game.drafting ? "info" : "default"} sx={{ m: 1 }} />
+    <Typography variant="h6" component="h6">Started {startedAtDate.toLocaleDateString("nb-NO")} {startedAtDate.toLocaleTimeString("nb-NO")}</Typography>
+    <Typography variant="h6" component="h6">Lasted {lastedDate.getHours()}h {lastedDate.getMinutes()}m</Typography>
+    <Chip icon={<MapIcon />} label={mapNames[game.map]} color="info" sx={{ display: "inline-flex", m: 1 }} />
+    <Chip icon={<LoopIcon />} label="Drafting" color={game.drafting ? "info" : "default"} sx={{ display: "inline-flex", m: 1 }} />
     <Divider>Players & Points</Divider>
-    <Typography variant="h1" component="h2">
-    <Chip icon={<FaceIcon />} label="JV" color={game.jv ? "info" : "default"} sx={{ m: 1 }} />
-    <CircularProgressWithLabel variant="determinate" value={percentagesOfMaxScore.jv} absoluteNumber={scores?.jv} />
-    <Chip icon={<FaceIcon />} label="GM" color={game.gm ? "info" : "default"} sx={{ m: 1 }} />
-    <CircularProgressWithLabel variant="determinate" value={percentagesOfMaxScore.gm} absoluteNumber={scores?.gm} />
-    <Chip icon={<FaceIcon />} label="H" color={game.h ? "info" : "default"} sx={{ m: 1 }} />
-    <CircularProgressWithLabel variant="determinate" value={percentagesOfMaxScore.h} absoluteNumber={scores?.h} />
-    <Chip icon={<FaceIcon />} label="T" color={game.t ? "info" : "default"} sx={{ m: 1 }} />
-    <CircularProgressWithLabel variant="determinate" value={percentagesOfMaxScore.t} absoluteNumber={scores?.t} />
-    </Typography>
+    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
+      {
+        [
+          { name: "JV", score: scores?.jv || 0, played: game.jv },
+          { name: "H", score: scores?.h || 0, played: game.h },
+          { name: "GM", score: scores?.gm || 0, played: game.gm },
+          { name: "T", score: scores?.t || 0, played: game.t }
+        ]
+        .sort((a, b) => b.score - a.score)
+        .map(player => (<Grid xs={3}>{RenderScore(player.name, player.played, player.score, isTopScore(player.score, scores!))}</Grid>))
+      }
+    </Grid>
     <Divider>Expansions</Divider>
   </Card>);
 }

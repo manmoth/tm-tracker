@@ -2,7 +2,7 @@ namespace TmTracker.Models;
 
 public record TrackedGame
 {
-    public string Id {get; set; } = default!;
+    public string? Id { get; set; } = default!;
 
     public bool Drafting { get; set; } = true;
 

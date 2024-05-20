@@ -47,5 +47,7 @@ public record TrackedGame : ITableEntity
 
     public DateTime? StartedAt { get; set; }
 
+    public bool Ended { get; set; } = false;
+
     public DateTime? EndedAt { get; set; }
 }

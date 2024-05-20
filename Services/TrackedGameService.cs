@@ -22,18 +22,18 @@ public class TrackedGameService(TableServiceClient tableServiceClient, IHostEnvi
     private TableClient CreateGameTableClient() => tableServiceClient.GetTableClient(GamesTableName + hostEnvironment.EnvironmentName);
     private TableClient CreateGameScoresTableClient() => tableServiceClient.GetTableClient(GameScoresTableName + hostEnvironment.EnvironmentName);
 
-    public async Task CreateGame(TrackedGame? game) {
-
-        if(game is null)
-            return;
-
+    public async Task<Models.TrackedGame> CreateGame(Models.TrackedGame? game) {
         var gamesTableClient = CreateGameTableClient();
         await gamesTableClient.CreateIfNotExistsAsync();
         var gameRowKey = Guid.NewGuid().ToString();
-        await gamesTableClient.AddEntityAsync(game with { PartitionKey = "games", RowKey = gameRowKey });
+        await gamesTableClient.AddEntityAsync(mapper.Map<TrackedGame>(game ?? new Models.TrackedGame()) with { PartitionKey = "games", RowKey = gameRowKey, StartedAt = DateTime.UtcNow });
         var scoresTableClient = CreateGameScoresTableClient();
         await scoresTableClient.CreateIfNotExistsAsync();
         await scoresTableClient.AddEntityAsync(new GameScores {GameRowKey = gameRowKey} with { PartitionKey = "games", RowKey = Guid.NewGuid().ToString() });
+
+        var newGameEntity = (await gamesTableClient.GetEntityAsync<TrackedGame>("games", gameRowKey)).Value;
+        var newGame = mapper.Map<Models.TrackedGame>(newGameEntity);
+        return newGame;
     }
 
     public async Task<IEnumerable<Models.TrackedGame>> GetGames() {
@@ -44,22 +44,28 @@ public class TrackedGameService(TableServiceClient tableServiceClient, IHostEnvi
             .Select(mapper.Map<Models.TrackedGame>);
     }
 
-    public async Task UpdateGame(Models.TrackedGame? game) {
+    public async Task<Models.TrackedGame?> CreateOrUpdateGame(Models.TrackedGame? game) {
+
+        Guid ParseId() => Guid.TryParse(game.Id, out var guid) ? guid : Guid.Empty;
+
         if(game is null)
-            return;
+            return null;
 
-        var id = Guid.TryParse(game.Id, out var guid) ? guid : Guid.Empty;
+        if(ParseId() == Guid.Empty)
+            game = await CreateGame(game);
 
-        if(id == Guid.Empty)
-            return;
+        var id = ParseId();
 
         var tableClient = CreateGameTableClient();
         var entity = tableClient.Query<TrackedGame>(g => g.PartitionKey == "games" && g.RowKey == id.ToString()).ToList().FirstOrDefault();
 
         if(entity is null)
-            return;
+            return null;
 
-        await tableClient.UpdateEntityAsync(entity with { EndedAt = entity.EndedAt is null && game.Ended ? DateTime.UtcNow : entity.EndedAt }, entity.ETag);
+        await tableClient.UpdateEntityAsync(entity with { Ended = game.Ended, EndedAt = entity.EndedAt is null && game.Ended ? DateTime.UtcNow : entity.EndedAt }, entity.ETag);
+
+        var gameEntity = (await tableClient.GetEntityAsync<TrackedGame>("games", entity.RowKey)).Value;
+        return mapper.Map<Models.TrackedGame>(gameEntity);
     }
 
     public async Task<IEnumerable<Models.GameScores>> GetGameScores() {

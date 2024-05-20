@@ -13,7 +13,14 @@ public class TrackedGamesController(TrackedGameService trackedGameService) : Con
         => (await trackedGameService.GetGames())
             .OrderByDescending(g => g.StartedAt);
 
-    [HttpPatch]
-    public async Task Patch([FromBody]Models.TrackedGame game)
-        => await trackedGameService.UpdateGame(game);
+
+    [HttpPut]
+    public async Task<IActionResult> Put([FromBody]Models.TrackedGame game) {
+        var createdOrUpdatedGame = await trackedGameService.CreateOrUpdateGame(game);
+
+        if(createdOrUpdatedGame is null)
+            return BadRequest();
+
+        return Ok(createdOrUpdatedGame);
+    }
 }

@@ -11,10 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 var mapperConfig = new TypeAdapterConfig();
 
 mapperConfig.NewConfig<TmTracker.Entities.TrackedGame, TmTracker.Models.TrackedGame>()
-    .Map(dest => dest.Id, src => src.RowKey)
-    .Map(dest => dest.Ended, src => src.EndedAt != null);
+    .TwoWays()
+    .Map(dest => dest.Id, src => src.RowKey);
 
 mapperConfig.NewConfig<TmTracker.Entities.GameScores, TmTracker.Models.GameScores>()
+    .TwoWays()
     .Map(dest => dest.GameId, src => src.GameRowKey);
 
 builder.Services.AddSingleton(mapperConfig);

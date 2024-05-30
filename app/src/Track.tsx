@@ -19,6 +19,7 @@ interface NewGame {
   turmoil: boolean;
 }
 
+// TODO: Fix CSRF
 async function createOrUpdateGame(game: NewGame): Promise<NewGame> {
   const response = await fetch("/trackedgames", {
     method: "put",

@@ -1,4 +1,4 @@
-import { Button, Checkbox, Container, Divider, FormControlLabel, Select } from "@mui/material"
+import { Button, Checkbox, Container, Divider, FormControlLabel, Select, Typography } from "@mui/material"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import MenuItem from '@mui/material/MenuItem';
 import { maps } from "./maps";
@@ -65,8 +65,8 @@ function TrackGame() {
   }
 
   return (
-    <Container maxWidth="xl">
-      <h1>Track new game</h1>
+    <Container maxWidth="xl" sx={{marginTop: 5 }}>
+    <Typography variant="h2" component="h2" sx={{ m: 1 }}>Track new game</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="drafting"

@@ -13,6 +13,7 @@ import ErrorPage from './ErrorPage.tsx'
 import Games from './Games.tsx'
 import Track from './Track.tsx'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import Stats from './Stats.tsx'
 
 const queryClient = new QueryClient()
 
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "track",
         element: <Track />,
+      },
+      {
+        path: "stats",
+        element: <Stats />,
       },
     ]
   },

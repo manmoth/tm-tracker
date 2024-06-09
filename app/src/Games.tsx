@@ -1,51 +1,7 @@
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { useQuery } from "react-query"
 import GameCard from "./GameCard";
-
-export interface Game {
-  id: string;
-  map: number;
-  drafting: boolean;
-  jv: boolean;
-  h: boolean;
-  gm: boolean;
-  t: boolean;
-  startedAt: string;
-  ended: boolean;
-  endedAt: string;
-  promos: boolean;
-  corporateEra: boolean;
-  colonies: boolean;
-  prelude: boolean;
-  venusNext: boolean;
-  turmoil: boolean;
-}
-
-export interface GameScores {
-  gameId: string;
-  jv?: number;
-  h?: number;
-  gm?: number;
-  t?: number;
-}
-
-async function fetchGames(): Promise<Game[]> {
-  const response = await fetch("/trackedgames");
-  if (!response.ok) {
-    throw new Error('Fetch error ' + response.statusText);
-  }
-  
-  return await response.json() as Game[];
-}
-
-async function fetchGameScores(): Promise<GameScores[]> {
-  const response = await fetch("/gamescores");
-  if (!response.ok) {
-    throw new Error('Fetch error ' + response.statusText);
-  }
-  
-  return await response.json() as GameScores[];
-}
+import { Game, fetchGameScores, fetchGames } from "./types";
 
 function Games() {
   const gamesQuery = useQuery({ queryKey: ['games'], queryFn: fetchGames })
@@ -56,8 +12,8 @@ function Games() {
   }
 
   return (
-    <Container maxWidth="xl">
-      <h1>Previous Games</h1>
+    <Container maxWidth="xl" sx={{marginTop: 5 }}>
+      <Typography variant="h2" component="h2">Games</Typography>
       {gamesQuery.data?.map((game: Game) => {
         const scores = gameScoresQuery.data?.find(scores => scores.gameId == game.id);
 

@@ -45,6 +45,16 @@ function TmAppBar() {
               textDecoration: 'none',
             }}
           >Track</Typography></Link>
+          <Link to={'stats'}><Typography textAlign="center"             
+            sx={{
+              mr: 2,
+              fontFamily: 'monospace',
+              fontWeight: 300,
+              letterSpacing: '.1rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >Stats</Typography></Link>
         </Toolbar>
       </Container>
     </AppBar>

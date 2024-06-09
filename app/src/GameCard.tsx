@@ -4,7 +4,7 @@ import LoopIcon from '@mui/icons-material/Loop';
 import { maps } from "./maps";
 import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { Game, GameScores } from "./Games";
+import { Game, GameScores } from "./types";
 
 // TODO: Fix CSRF
 async function endGame(game: Game) {

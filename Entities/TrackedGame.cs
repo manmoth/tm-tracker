@@ -50,4 +50,6 @@ public record TrackedGame : ITableEntity
     public bool Ended { get; set; } = false;
 
     public DateTime? EndedAt { get; set; }
+
+    public int TotalPausedMinutes { get; set; }
 }

@@ -62,7 +62,7 @@ public class TrackedGameService(TableServiceClient tableServiceClient, IHostEnvi
         if(entity is null)
             return null;
 
-        await tableClient.UpdateEntityAsync(entity with { Ended = game.Ended, EndedAt = entity.EndedAt is null && game.Ended ? DateTime.UtcNow : entity.EndedAt }, entity.ETag);
+        await tableClient.UpdateEntityAsync(entity with { TotalPausedMinutes = game.TotalPausedMinutes, Ended = game.Ended, EndedAt = entity.EndedAt is null && game.Ended ? DateTime.UtcNow : entity.EndedAt }, entity.ETag);
 
         var gameEntity = (await tableClient.GetEntityAsync<TrackedGame>("games", entity.RowKey)).Value;
         return mapper.Map<Models.TrackedGame>(gameEntity);

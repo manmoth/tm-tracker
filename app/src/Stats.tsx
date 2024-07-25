@@ -32,9 +32,9 @@ function Stats() {
 
     const gamesLast = gameScoresQuery.data?.reduce<{ jv: number, gm: number, h: number, t: number}>(
         (prev, curr) => { 
-            const loserPoints = Math.min(curr.gm ?? 0, curr.jv ?? 0, curr.h ?? 0, curr.t ?? 0);
+            const loserPoints = Math.min(curr.gm ?? 1000, curr.jv ?? 1000, curr.h ?? 1000, curr.t ?? 1000);
 
-            if(loserPoints === 0)
+            if(loserPoints === 1000)
                 return prev;
 
             return { jv: (curr.jv == loserPoints ? prev.jv + 1 : prev.jv), gm: (curr.gm == loserPoints ? prev.gm + 1 : prev.gm), h: (curr.h == loserPoints ? prev.h + 1 : prev.h), t: (curr.t == loserPoints ? prev.t + 1 : prev.t) };
@@ -66,7 +66,7 @@ function Stats() {
           .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
           .map(({ name, percent }) => (<Grid item key={`player_${name}`} xs={3}>
               <Typography variant="h6" component="h6" sx={{ m: 1 }}>{`${name}`}</Typography>
-              <Typography variant="h6" component="h6" sx={{ m: 1 }}>{percent.toFixed(0) + "%" ?? "N/A"}</Typography>
+              <Typography variant="h6" component="h6" sx={{ m: 1 }}>{percent.toFixed(1) + "%" ?? "N/A"}</Typography>
             </Grid>
           ))}
         </Grid>
@@ -76,7 +76,7 @@ function Stats() {
           .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
           .map(({ name, percent }) => (<Grid item key={`player_${name}`} xs={3}>
               <Typography variant="h6" component="h6" sx={{ m: 1 }}>{`${name}`}</Typography>
-              <Typography variant="h6" component="h6" sx={{ m: 1 }}>{percent.toFixed(0) + "%" ?? "N/A"}</Typography>
+              <Typography variant="h6" component="h6" sx={{ m: 1 }}>{percent.toFixed(1) + "%" ?? "N/A"}</Typography>
             </Grid>
           ))}
         </Grid>

@@ -3,7 +3,7 @@ import MapIcon from '@mui/icons-material/Map';
 import LoopIcon from '@mui/icons-material/Loop';
 import { maps } from "./maps";
 import { useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { Control, Controller, SubmitHandler, UseFormHandleSubmit, useForm } from "react-hook-form";
 import { Game, GameScores } from "./types";
 
 // TODO: Fix CSRF
@@ -60,85 +60,46 @@ function RenderExpansion(name: string, played: boolean) {
   return <Chip label={name} color={played ? "info" : "default"} sx={{ display: "inline-flex", m: 1 }} variant={played ? "filled" : "outlined"} />;
 }
 
-function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Promise<void>}){
-    const { game, scores, gamesQuery } = props;
+function RenderSetGameScoresModal(
+  game: Game, open: boolean,
+  control: Control<GameScores>,
+  handleClose: () => void,
+  handleSubmit: UseFormHandleSubmit<GameScores>,
+  gamesQuery: () => Promise<void>) {
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
-    const handleEndGame = (game: Game) => { void (async () => { await endGame(game); await gamesQuery();})(); };
-    const startedAtDate = new Date(game.startedAt);
-    const endedAtDate = new Date(game.endedAt);
-  
-    const scoresSet = game.ended && (!game.jv || scores?.jv) && (!game.h || scores?.h) && (!game.gm || scores?.gm) && (!game.t || scores?.t);
-  
-    const canSetScores = game.ended && (endedAtDate.getTime() - new Date().getTime()) / 1000 / 60 < 60;
-    const lastedTotalMinutes = ((game.ended ? endedAtDate : new Date()).getTime() - startedAtDate.getTime()) / 1000 / 60;
-    const lastedHours = Math.floor(lastedTotalMinutes / 60);
-    const lastedMinutes = Math.floor(lastedTotalMinutes - lastedHours * 60);
-  
-    const { control, handleSubmit } = useForm<GameScores>({
-      defaultValues: {
-        gm: 0,
-        jv: 0,
-        h: 0,
-        t: 0,
-      },
-    });
-  
-    const [openSetScoresModal, setOpenSetScoresModal] = useState(false);
-  
-    const style = {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: 400,
-      bgcolor: 'background.paper',
-      border: '2px solid #000',
-      boxShadow: 24,
-      p: 4,
+  const onSubmit: SubmitHandler<GameScores> = async (data) => {
+    const submittedScores = {
+      gm: game.gm ? data.gm : undefined,
+      jv: game.jv ? data.jv : undefined,
+      h: game.h ? data.h : undefined,
+      t: game.t ? data.t : undefined
     };
-  
-    const handleOpenSetScoresModal = () => {
-      setOpenSetScoresModal(true);
-    }
-  
-    const handleCloseSetScoresModal = () => {
-      setOpenSetScoresModal(false);
-    }
-    
-    const onSubmitSetScores: SubmitHandler<GameScores> = async (data) => {
-      const submittedScores = {
-        gm: game.gm ? data.gm : undefined,
-        jv: game.jv ? data.jv : undefined,
-        h: game.h ? data.h : undefined,
-        t: game.t ? data.t : undefined
-      };
 
-      await setScores({...submittedScores, gameId: game.id}); await gamesQuery();
-  
-      handleCloseSetScoresModal();
-    }
-  
-    return (
-    <Paper elevation={8} square={false} sx={{m:6}}>    
-      {!game.ended && 
-        <Button variant="outlined" color="primary" sx={{m:1}} onClick={() => handleEndGame(game)}>
-          End game
-        </Button>
-      }
-      {
-        game.ended && !scoresSet && canSetScores &&
-        <Button variant="outlined" color="primary" sx={{m:1}} onClick={handleOpenSetScoresModal}>
-          Set scores
-        </Button>
-      }
-      <Modal
-        open={openSetScoresModal}
-        onClose={handleCloseSetScoresModal}
+    await setScores({...submittedScores, gameId: game.id}); await gamesQuery();
+
+    handleClose();
+  }
+
+  return (
+    <Modal
+        open={open}
+        onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <form onSubmit={handleSubmit(onSubmitSetScores)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
 
           { game.gm &&
           <Controller
@@ -179,6 +140,56 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
         </form>
         </Box>
       </Modal>
+  );
+}
+
+function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Promise<void>}){
+    const { game, scores, gamesQuery } = props;
+
+    const handleEndGame = (game: Game) => { void (async () => { await endGame(game); await gamesQuery();})(); };
+    const startedAtDate = new Date(game.startedAt);
+    const endedAtDate = new Date(game.endedAt);
+  
+    const scoresSet = game.ended && (!game.jv || scores?.jv) && (!game.h || scores?.h) && (!game.gm || scores?.gm) && (!game.t || scores?.t);
+  
+    const canSetScores = game.ended && (endedAtDate.getTime() - new Date().getTime()) / 1000 / 60 < 60;
+    const lastedTotalMinutes = ((game.ended ? endedAtDate : new Date()).getTime() - startedAtDate.getTime()) / 1000 / 60;
+    const lastedHours = Math.floor(lastedTotalMinutes / 60);
+    const lastedMinutes = Math.floor(lastedTotalMinutes - lastedHours * 60);
+  
+    const { control, handleSubmit: handleSubmitSetGameScores } = useForm<GameScores>({
+      defaultValues: {
+        gm: 0,
+        jv: 0,
+        h: 0,
+        t: 0,
+      },
+    });
+  
+    const [openSetScoresModal, setOpenSetScoresModal] = useState(false);
+  
+    const handleOpenSetScoresModal = () => {
+      setOpenSetScoresModal(true);
+    }
+  
+    const handleCloseSetScoresModal = () => {
+      setOpenSetScoresModal(false);
+    }
+  
+    return (
+    <Paper elevation={8} square={false} sx={{m:6}}>    
+      {!game.ended && 
+        <Button variant="outlined" color="primary" sx={{m:1}} onClick={() => handleEndGame(game)}>
+          End game
+        </Button>
+      }
+      {
+        game.ended && !scoresSet && canSetScores &&
+        <Button variant="outlined" color="primary" sx={{m:1}} onClick={handleOpenSetScoresModal}>
+          Set scores
+        </Button>
+      }
+      {RenderSetGameScoresModal(game, openSetScoresModal, control, handleCloseSetScoresModal, handleSubmitSetGameScores, gamesQuery)}
       <Divider><Typography variant="h5" component="h5">{startedAtDate.toLocaleDateString("nb-NO", { dateStyle: "short" })} at {startedAtDate.toLocaleTimeString("nb-NO", { hour: "2-digit", minute: "2-digit" })}</Typography></Divider>
       <Typography variant="h6" component="h6">{game.ended ? "Lasted " : "Still playing "}{`${lastedHours}h ${lastedMinutes}m`}</Typography>
       <Chip icon={<MapIcon />} label={maps.find(map => map.id == game.map)?.name ?? "Unknown map"} color="info" sx={{ display: "inline-flex", m: 1 }} variant="filled" />

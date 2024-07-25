@@ -10,6 +10,7 @@ export interface Game {
   startedAt: string;
   ended: boolean;
   endedAt: string;
+  totalPausedMinutes: number;
   promos: boolean;
   corporateEra: boolean;
   colonies: boolean;

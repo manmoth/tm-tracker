@@ -83,7 +83,7 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
       },
     });
   
-    const [open, setOpen] = useState(false);
+    const [openSetScoresModal, setOpenSetScoresModal] = useState(false);
   
     const style = {
       position: 'absolute',
@@ -97,15 +97,15 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
       p: 4,
     };
   
-    const handleOpen = () => {
-      setOpen(true);
+    const handleOpenSetScoresModal = () => {
+      setOpenSetScoresModal(true);
     }
   
-    const handleClose = () => {
-      setOpen(false);
+    const handleCloseSetScoresModal = () => {
+      setOpenSetScoresModal(false);
     }
     
-    const onSubmit: SubmitHandler<GameScores> = async (data) => {
+    const onSubmitSetScores: SubmitHandler<GameScores> = async (data) => {
       const submittedScores = {
         gm: game.gm ? data.gm : undefined,
         jv: game.jv ? data.jv : undefined,
@@ -115,7 +115,7 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
 
       await setScores({...submittedScores, gameId: game.id}); await gamesQuery();
   
-      handleClose();
+      handleCloseSetScoresModal();
     }
   
     return (
@@ -127,18 +127,18 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
       }
       {
         game.ended && !scoresSet && canSetScores &&
-        <Button variant="outlined" color="primary" sx={{m:1}} onClick={handleOpen}>
+        <Button variant="outlined" color="primary" sx={{m:1}} onClick={handleOpenSetScoresModal}>
           Set scores
         </Button>
       }
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={openSetScoresModal}
+        onClose={handleCloseSetScoresModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmitSetScores)}>
 
           { game.gm &&
           <Controller

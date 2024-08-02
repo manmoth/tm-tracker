@@ -7,6 +7,10 @@ export interface Game {
   h: boolean;
   gm: boolean;
   t: boolean;
+  corpGM: string;
+  corpJV: string;
+  corpH: string;
+  corpT: string;
   startedAt: string;
   ended: boolean;
   endedAt: string;

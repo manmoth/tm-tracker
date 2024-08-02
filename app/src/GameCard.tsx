@@ -1,10 +1,11 @@
-import { Box, Button, Chip, Divider, FormControlLabel, Grid, Modal, Paper, TextField, Typography } from "@mui/material";
+import { Autocomplete, Box, Button, Chip, Divider, FormControlLabel, Grid, Modal, Paper, TextField, Typography } from "@mui/material";
 import MapIcon from '@mui/icons-material/Map';
 import LoopIcon from '@mui/icons-material/Loop';
 import { maps } from "./maps";
 import { useState } from "react";
 import { Control, Controller, SubmitHandler, UseFormHandleSubmit, useForm } from "react-hook-form";
 import { Game, GameScores } from "./types";
+import { corporations } from "./corporations";
 
 async function endGame(game: Game) {
   game.ended = true;
@@ -54,10 +55,11 @@ function isTopScore(score?: number, scores?: GameScores) {
   return score === Math.max(scores?.jv ?? 0, scores?.h ?? 0, scores?.gm ?? 0, scores?.t ?? 0);
 }
 
-function RenderScore(name: string, score?: number, isTopScore?: boolean) {
+function RenderScore(name: string, corp: string, score?: number, isTopScore?: boolean) {
   return <>
       <Typography variant="h5" component="h5" sx={{ m: 1 }}>{`👨‍🚀${name}`}</Typography>
       <Typography variant="h5" component="h5" sx={{ m: 1 }}>{isTopScore ? "🏆" : ""}{score ?? "N/A"}</Typography>
+      <Typography variant="h6" component="h6" fontSize={14} sx={{ m: 1 }}>{`${corp || ""}`}</Typography>
   </>;
 }
 
@@ -190,6 +192,131 @@ function RenderSetGameScoresModal(
   );
 }
 
+function RenderSetCorporationsModal(
+  game: Game, open: boolean,
+  control: Control<{ corpGM: string, corpJV: string, corpH: string, corpT: string }>,
+  handleClose: () => void,
+  handleSubmit: UseFormHandleSubmit<{ corpGM: string, corpJV: string, corpH: string, corpT: string }>,
+  gamesQuery: () => Promise<void>) {
+
+  const onSubmit: SubmitHandler<{ corpGM: string, corpJV: string, corpH: string, corpT: string }> = async (data) => {
+    await updateGame({...game, ...data}); await gamesQuery();
+
+    handleClose();
+  }
+
+  return (
+    <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+
+          { game.gm &&
+            <Controller
+              control={control}
+              name="corpGM"
+              render={({ field: { onChange, value } }) => (
+                <Autocomplete
+                  freeSolo
+                  options={corporations.map(corp => corp.name)}
+                  onChange={(event, values) => onChange(values)}
+                  value={value}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="GM"
+                      variant="outlined"
+                      onChange={onChange}
+                      sx={{ mt: 2 }}
+                    />
+                  )}
+                />
+              )}
+            />
+          }
+          { game.h &&
+            <Controller
+            control={control}
+            name="corpH"
+            render={({ field: { onChange, value } }) => (
+              <Autocomplete
+                freeSolo
+                options={corporations.map(corp => corp.name)}
+                onChange={(event, values) => onChange(values)}
+                value={value}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="H"
+                    variant="outlined"
+                    onChange={onChange}
+                    sx={{ mt: 2 }}
+                  />
+                )}
+              />
+            )}
+          />
+          }
+          { game.jv &&
+            <Controller
+            control={control}
+            name="corpJV"
+            render={({ field: { onChange, value } }) => (
+              <Autocomplete
+                freeSolo
+                options={corporations.map(corp => corp.name)}
+                onChange={(event, values) => onChange(values)}
+                value={value}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="JV"
+                    variant="outlined"
+                    onChange={onChange}
+                    sx={{ mt: 2 }}
+                  />
+                )}
+              />
+            )}
+          />
+          }
+          { game.t &&
+            <Controller
+            control={control}
+            name="corpT"
+            render={({ field: { onChange, value } }) => (
+              <Autocomplete
+                freeSolo
+                options={corporations.map(corp => corp.name)}
+                onChange={(event, values) => onChange(values)}
+                value={value}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="T"
+                    variant="outlined"
+                    onChange={onChange}
+                    sx={{ mt: 2 }}
+                  />
+                )}
+              />
+            )}
+          />
+          }
+          <Divider></Divider>
+          <Button variant="outlined" color="primary" sx={{m: 1}} type="submit">
+            Submit
+          </Button>
+        </form>
+        </Box>
+      </Modal>
+  );
+}
+
 function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Promise<void>}){
     const { game, scores, gamesQuery } = props;
 
@@ -202,6 +329,7 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
     const minutesSinceGameEnded = game.ended ? (new Date().getTime() - endedAtDate.getTime()) / 1000 / 60 : 0;
     const canEditScores = game.ended && minutesSinceGameEnded < 24 * 60;
     const canEditTotalPausedTime = !game.ended || minutesSinceGameEnded < 24 * 60;
+    const canEditCorps = !game.ended || minutesSinceGameEnded < 24 * 60;
 
     const totalPausedMinutes = game.totalPausedMinutes ?? 0;
     const lastedTotalMinutes = ((game.ended ? endedAtDate : new Date()).getTime() - startedAtDate.getTime()) / 1000 / 60 - totalPausedMinutes;
@@ -242,6 +370,24 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
       setOpenSetTotalPausedTimeModal(false);
     }
   
+    const { control: setCorpsControl, handleSubmit: handleSubmitSetCorps } = useForm<{ corpGM: string, corpJV: string, corpH: string, corpT: string }>({
+      defaultValues: {
+        corpGM: game.corpGM || corporations[0].name,
+        corpJV: game.corpJV || corporations[0].name,
+        corpH: game.corpH || corporations[0].name,
+        corpT: game.corpT || corporations[0].name
+      },
+    });
+    const [openSetCorpsModal, setOpenSetCorpsModal] = useState(false);
+  
+    const handleOpenSetCorpsModal = () => {
+      setOpenSetCorpsModal(true);
+    }
+  
+    const handleCloseSetCorpsModal = () => {
+      setOpenSetCorpsModal(false);
+    }
+
     return (
     <Paper elevation={8} square={false} sx={{m:6}}>    
       {!game.ended && 
@@ -261,8 +407,15 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
           Set paused time
         </Button>
       }
+      {
+        canEditCorps &&
+        <Button variant="outlined" color="primary" sx={{m:1}} onClick={handleOpenSetCorpsModal}>
+          Set corporations
+        </Button>
+      }
       {RenderSetGameScoresModal(game, openSetScoresModal, setGameScoresControl, handleCloseSetScoresModal, handleSubmitSetGameScores, gamesQuery)}
       {RenderSetPausedTimeModal(game, openSetTotalPausedTimeModal, setTotalPausedTimeControl, handleCloseSetTotalPausedTimeModal, handleSubmitSetTotalPausedTime, gamesQuery)}
+      {RenderSetCorporationsModal(game, openSetCorpsModal, setCorpsControl, handleCloseSetCorpsModal, handleSubmitSetCorps, gamesQuery)}
       <Divider><Typography variant="h5" component="h5">{startedAtDate.toLocaleDateString("nb-NO", { dateStyle: "short" })} at {startedAtDate.toLocaleTimeString("nb-NO", { hour: "2-digit", minute: "2-digit" })}</Typography></Divider>
       <Typography variant="h6" component="h6">{game.ended ? "Played " : "Still playing "}{`${lastedHours}h ${lastedMinutes}m`}</Typography>
       {totalPausedMinutes > 0 && <Typography variant="h6" component="h6" fontSize={14}>{`Paused ${totalPausedMinutes}m`}</Typography>}
@@ -272,13 +425,13 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
         {
           [
-            { name: "JV", score: scores?.jv, played: game.jv },
-            { name: "H", score: scores?.h, played: game.h },
-            { name: "GM", score: scores?.gm, played: game.gm },
-            { name: "T", score: scores?.t, played: game.t }
+            { name: "JV", corp: game.corpJV, score: scores?.jv, played: game.jv },
+            { name: "H", corp: game.corpH, score: scores?.h, played: game.h },
+            { name: "GM", corp: game.corpGM, score: scores?.gm, played: game.gm },
+            { name: "T", corp: game.corpT, score: scores?.t, played: game.t }
           ]
           .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
-          .map(player => player.played && <Grid item key={`player_${player.name}`} xs={3}>{RenderScore(player.name, game.ended ? player.score : undefined, isTopScore(player.score, scores))}</Grid>)
+          .map(player => player.played && <Grid item key={`player_${player.name}`} xs={3}>{RenderScore(player.name, player.corp, game.ended ? player.score : undefined, isTopScore(player.score, scores))}</Grid>)
         }
       </Grid>
       <Divider>Expansions</Divider>

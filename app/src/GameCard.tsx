@@ -223,7 +223,7 @@ function RenderSetCorporationsModal(
                 <Autocomplete
                   freeSolo
                   options={corporations.map(corp => corp.name)}
-                  onChange={(event, values) => onChange(values)}
+                  onChange={(_, values) => onChange(values)}
                   value={value}
                   renderInput={(params) => (
                     <TextField
@@ -246,7 +246,7 @@ function RenderSetCorporationsModal(
               <Autocomplete
                 freeSolo
                 options={corporations.map(corp => corp.name)}
-                onChange={(event, values) => onChange(values)}
+                onChange={(_, values) => onChange(values)}
                 value={value}
                 renderInput={(params) => (
                   <TextField
@@ -269,7 +269,7 @@ function RenderSetCorporationsModal(
               <Autocomplete
                 freeSolo
                 options={corporations.map(corp => corp.name)}
-                onChange={(event, values) => onChange(values)}
+                onChange={(_, values) => onChange(values)}
                 value={value}
                 renderInput={(params) => (
                   <TextField
@@ -292,7 +292,7 @@ function RenderSetCorporationsModal(
               <Autocomplete
                 freeSolo
                 options={corporations.map(corp => corp.name)}
-                onChange={(event, values) => onChange(values)}
+                onChange={(_, values) => onChange(values)}
                 value={value}
                 renderInput={(params) => (
                   <TextField

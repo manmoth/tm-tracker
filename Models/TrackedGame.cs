@@ -28,6 +28,14 @@ public record TrackedGame
 
     public bool H { get; set; } = true;
 
+    public string CorpGM { get; set; } = string.Empty;
+
+    public string CorpJV { get; set; } = string.Empty;
+
+    public string CorpH { get; set; } = string.Empty;
+
+    public string CorpT { get; set; } = string.Empty;
+
     public DateTime? StartedAt { get; set; }
 
     public bool Ended { get; set; } = false;

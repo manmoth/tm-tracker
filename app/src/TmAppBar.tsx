@@ -45,7 +45,7 @@ function TmAppBar() {
               textDecoration: 'none',
             }}
           >Track</Typography></Link>
-          <Link to={'stats'}><Typography textAlign="center"             
+          <Link to={'statsCurrent'}><Typography textAlign="center"             
             sx={{
               mr: 2,
               fontFamily: 'monospace',
@@ -54,7 +54,27 @@ function TmAppBar() {
               color: 'inherit',
               textDecoration: 'none',
             }}
-          >Stats</Typography></Link>
+          >Stats - Current</Typography></Link>          
+          <Link to={'gamesPrevious'}><Typography textAlign="center"            
+            sx={{
+              mr: 2,
+              fontFamily: 'monospace',
+              fontWeight: 300,
+              letterSpacing: '.1rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >Games - Previous</Typography></Link>
+          <Link to={'statsPrevious'}><Typography textAlign="center"             
+            sx={{
+              mr: 2,
+              fontFamily: 'monospace',
+              fontWeight: 300,
+              letterSpacing: '.1rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >Stats - Previous</Typography></Link>
         </Toolbar>
       </Container>
     </AppBar>

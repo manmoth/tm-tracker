@@ -13,6 +13,10 @@ public class TrackedGamesController(TrackedGameService trackedGameService) : Con
         => (await trackedGameService.GetGames())
             .OrderByDescending(g => g.StartedAt);
 
+    [HttpGet("{season}")]
+    public async Task<IEnumerable<Models.TrackedGame>> GetSeason(int season)
+        => (await trackedGameService.GetGamesSeason(season))
+            .OrderByDescending(g => g.StartedAt);
 
     [HttpPut]
     public async Task<IActionResult> Put([FromBody]Models.TrackedGame game) {

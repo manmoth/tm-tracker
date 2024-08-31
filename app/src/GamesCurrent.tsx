@@ -3,7 +3,7 @@ import { useQuery } from "react-query"
 import GameCard from "./GameCard";
 import { Game, fetchGameScores, fetchGames } from "./types";
 
-function Games() {
+function GamesCurrent() {
   const gamesQuery = useQuery({ queryKey: ['games'], queryFn: fetchGames })
   const gameScoresQuery = useQuery({ queryKey: ['gameScores'], queryFn: fetchGameScores })
 
@@ -13,7 +13,7 @@ function Games() {
 
   return (
     <Container maxWidth="xl" sx={{marginTop: 5 }}>
-      <Typography variant="h2" component="h2">Games</Typography>
+      <Typography variant="h2" component="h2">Games - Current Season</Typography>
       {gamesQuery.data?.map((game: Game) => {
         const scores = gameScoresQuery.data?.find(scores => scores.gameId == game.id);
 
@@ -23,5 +23,5 @@ function Games() {
   )
 }
 
-export default Games
+export default GamesCurrent
   

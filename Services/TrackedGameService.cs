@@ -19,6 +19,12 @@ public class TrackedGameService(TableServiceClient tableServiceClient, IHostEnvi
         { 7, "Amazonis Planitia" } 
     };
 
+    private static readonly IDictionary<int, (DateTimeOffset Start, DateTimeOffset End)> SeasonDates = new Dictionary<int, (DateTimeOffset Start, DateTimeOffset End)> {
+        { 1, (new (2024, 5, 1, 0, 0, 0, TimeSpan.Zero), new (2024, 8, 31, 0, 0, 0, TimeSpan.Zero)) }
+    };
+
+    private static readonly DateTimeOffset CurrentSeasonStart = SeasonDates.Max(s => s.Value.End);
+
     private TableClient CreateGameTableClient() => tableServiceClient.GetTableClient(GamesTableName + hostEnvironment.EnvironmentName);
     private TableClient CreateGameScoresTableClient() => tableServiceClient.GetTableClient(GameScoresTableName + hostEnvironment.EnvironmentName);
 
@@ -40,7 +46,18 @@ public class TrackedGameService(TableServiceClient tableServiceClient, IHostEnvi
         var tableClient = CreateGameTableClient();
 
         await tableClient.CreateIfNotExistsAsync();
-        return tableClient.Query<TrackedGame>(g => g.PartitionKey == "games").ToList()
+        return tableClient.Query<TrackedGame>(g => g.PartitionKey == "games" && g.StartedAt > CurrentSeasonStart).ToList()
+            .Select(mapper.Map<Models.TrackedGame>);
+    }
+
+    public async Task<IEnumerable<Models.TrackedGame>> GetGamesSeason(int season) {
+        if(!SeasonDates.TryGetValue(season, out var seasonDates))
+            return [];
+
+        var tableClient = CreateGameTableClient();
+
+        await tableClient.CreateIfNotExistsAsync();
+        return tableClient.Query<TrackedGame>(g => g.PartitionKey == "games" && g.StartedAt < seasonDates.End && g.StartedAt > seasonDates.Start).ToList()
             .Select(mapper.Map<Models.TrackedGame>);
     }
 
@@ -62,7 +79,7 @@ public class TrackedGameService(TableServiceClient tableServiceClient, IHostEnvi
         if(entity is null)
             return null;
 
-        string? NullIfPlayerNotPresent(bool present, string corpName) => present ? corpName : null;
+        string? NullIfPlayerNotPresent(bool present, string? corpName) => present ? corpName : null;
 
         await tableClient.UpdateEntityAsync(entity with { 
             CorpGM = NullIfPlayerNotPresent(game.GM, game.CorpGM), CorpJV = NullIfPlayerNotPresent(game.JV, game.CorpJV), CorpH = NullIfPlayerNotPresent(game.H, game.CorpH), CorpT = NullIfPlayerNotPresent(game.T, game.CorpT), 
@@ -75,11 +92,16 @@ public class TrackedGameService(TableServiceClient tableServiceClient, IHostEnvi
     }
 
     public async Task<IEnumerable<Models.GameScores>> GetGameScores() {
-        var tableClient = CreateGameScoresTableClient();
+        var tableGameClient = CreateGameTableClient();
+        var tableGameScoresClient = CreateGameScoresTableClient();
+        await tableGameClient.CreateIfNotExistsAsync();
+        await tableGameScoresClient.CreateIfNotExistsAsync();
 
-        await tableClient.CreateIfNotExistsAsync();
-        return tableClient.Query<GameScores>(g => g.PartitionKey == "games").ToList()
-            .Select(mapper.Map<Models.GameScores>);
+        var gamesThisSeason = tableGameClient.Query<TrackedGame>(g => g.PartitionKey == "games" && g.StartedAt > CurrentSeasonStart).ToList();
+        var gameScores = tableGameScoresClient.Query<GameScores>(g => g.PartitionKey == "games").ToList();
+
+
+        return gameScores.Where(gameScore => gamesThisSeason.Any(game => game.RowKey == gameScore.GameRowKey)).Select(mapper.Map<Models.GameScores>);
     }
 
     public async Task SetGameScores(Models.GameScores? gameScores) {
@@ -98,5 +120,21 @@ public class TrackedGameService(TableServiceClient tableServiceClient, IHostEnvi
             return;
 
         await tableClient.UpdateEntityAsync(entity with { H = gameScores.H, JV = gameScores.JV, GM = gameScores.GM, T = gameScores.T }, entity.ETag);
+    }
+
+    public async Task<IEnumerable<Models.GameScores>> GetGameScoresSeason(int season)
+    {
+        if(!SeasonDates.TryGetValue(season, out var seasonDates))
+            return [];
+
+        var tableGameClient = CreateGameTableClient();
+        var tableGameScoresClient = CreateGameScoresTableClient();
+        await tableGameClient.CreateIfNotExistsAsync();
+        await tableGameScoresClient.CreateIfNotExistsAsync();
+
+        var gamesSeason = tableGameClient.Query<TrackedGame>(g => g.PartitionKey == "games" && g.StartedAt < seasonDates.End && g.StartedAt > seasonDates.Start).ToList();
+        var gameScores = tableGameScoresClient.Query<GameScores>(g => g.PartitionKey == "games").ToList();
+
+        return gameScores.Where(gameScore => gamesSeason.Any(game => game.RowKey == gameScore.GameRowKey)).Select(mapper.Map<Models.GameScores>);
     }
 }

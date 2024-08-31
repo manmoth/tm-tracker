@@ -205,6 +205,8 @@ function RenderSetCorporationsModal(
     handleClose();
   }
 
+  const corpsSorted = corporations.map(corp => corp.name).sort();
+
   return (
     <Modal
         open={open}
@@ -222,7 +224,7 @@ function RenderSetCorporationsModal(
               render={({ field: { onChange, value } }) => (
                 <Autocomplete
                   freeSolo
-                  options={corporations.map(corp => corp.name)}
+                  options={corpsSorted}
                   onChange={(_, values) => onChange(values)}
                   value={value}
                   renderInput={(params) => (
@@ -245,7 +247,7 @@ function RenderSetCorporationsModal(
             render={({ field: { onChange, value } }) => (
               <Autocomplete
                 freeSolo
-                options={corporations.map(corp => corp.name)}
+                options={corpsSorted}
                 onChange={(_, values) => onChange(values)}
                 value={value}
                 renderInput={(params) => (
@@ -268,7 +270,7 @@ function RenderSetCorporationsModal(
             render={({ field: { onChange, value } }) => (
               <Autocomplete
                 freeSolo
-                options={corporations.map(corp => corp.name)}
+                options={corpsSorted}
                 onChange={(_, values) => onChange(values)}
                 value={value}
                 renderInput={(params) => (
@@ -291,7 +293,7 @@ function RenderSetCorporationsModal(
             render={({ field: { onChange, value } }) => (
               <Autocomplete
                 freeSolo
-                options={corporations.map(corp => corp.name)}
+                options={corpsSorted}
                 onChange={(_, values) => onChange(values)}
                 value={value}
                 renderInput={(params) => (

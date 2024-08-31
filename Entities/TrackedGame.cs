@@ -45,13 +45,13 @@ public record TrackedGame : ITableEntity
 
     public bool H { get; set; } = true;
 
-    public string CorpGM { get; set; } = string.Empty;
+    public string? CorpGM { get; set; } = string.Empty;
 
-    public string CorpJV { get; set; } = string.Empty;
+    public string? CorpJV { get; set; } = string.Empty;
 
-    public string CorpH { get; set; } = string.Empty;
+    public string? CorpH { get; set; } = string.Empty;
 
-    public string CorpT { get; set; } = string.Empty;
+    public string? CorpT { get; set; } = string.Empty;
     
     public DateTime? StartedAt { get; set; }
 

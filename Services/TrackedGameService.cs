@@ -62,8 +62,10 @@ public class TrackedGameService(TableServiceClient tableServiceClient, IHostEnvi
         if(entity is null)
             return null;
 
+        string? NullIfPlayerNotPresent(bool present, string corpName) => present ? corpName : null;
+
         await tableClient.UpdateEntityAsync(entity with { 
-            CorpGM = game.CorpGM, CorpJV = game.CorpJV, CorpH = game.CorpH, CorpT = game.CorpT, 
+            CorpGM = NullIfPlayerNotPresent(game.GM, game.CorpGM), CorpJV = NullIfPlayerNotPresent(game.JV, game.CorpJV), CorpH = NullIfPlayerNotPresent(game.H, game.CorpH), CorpT = NullIfPlayerNotPresent(game.T, game.CorpT), 
             TotalPausedMinutes = game.TotalPausedMinutes, Ended = game.Ended, EndedAt = entity.EndedAt is null && game.Ended ? DateTime.UtcNow : entity.EndedAt 
             }, entity.ETag
         );

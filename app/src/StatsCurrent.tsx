@@ -2,8 +2,9 @@ import { Container, Divider, Grid, List, ListItem, ListItemText, Typography } fr
 import { useQuery } from "react-query";
 import { maps } from "./maps";
 import { fetchGameScores, fetchGames } from "./types";
+import { calculateTimesPlayed, calculateGamesWon, calculateGamesLast, calculateTimeAbsent, calculateTimesPlayedPerMap } from "./statsHelper";
 
-function Stats() {
+function StatsCurrent() {
     const gamesQuery = useQuery({ queryKey: ['games'], queryFn: fetchGames })
     const gameScoresQuery = useQuery({ queryKey: ['gameScores'], queryFn: fetchGameScores })
   
@@ -11,54 +12,19 @@ function Stats() {
       return <span>Loading...</span>
     }
 
-    const timesPlayed = gamesQuery.data?.reduce<{ jv: number, gm: number, h: number, t: number}>(
-        (prev, curr) => { 
-            return { jv: prev.jv + (curr.jv ? 1 : 0), gm: prev.gm + (curr.gm ? 1 : 0), h: prev.h + (curr.h ? 1 : 0), t: prev.t + (curr.t ? 1 : 0) };
-        },
-        { jv: 0, gm: 0, h: 0, t: 0 }
-    );
+    const timesPlayed = calculateTimesPlayed(gamesQuery.data);
 
-    const gamesWon = gameScoresQuery.data?.reduce<{ jv: number, gm: number, h: number, t: number}>(
-        (prev, curr) => { 
-            const winnerPoints = Math.max(curr.gm ?? 0, curr.jv ?? 0, curr.h ?? 0, curr.t ?? 0);
+    const gamesWon = calculateGamesWon(gameScoresQuery.data);
 
-            if(winnerPoints === 0)
-                return prev;
+    const gamesLast = calculateGamesLast(gameScoresQuery.data);
 
-            return { jv: (curr.jv == winnerPoints ? prev.jv + 1 : prev.jv), gm: (curr.gm == winnerPoints ? prev.gm + 1 : prev.gm), h: (curr.h == winnerPoints ? prev.h + 1 : prev.h), t: (curr.t == winnerPoints ? prev.t + 1 : prev.t) };
-        },
-        { jv: 0, gm: 0, h: 0, t: 0 }
-    );
+    const timesAbsent = calculateTimeAbsent(gamesQuery.data);
 
-    const gamesLast = gameScoresQuery.data?.reduce<{ jv: number, gm: number, h: number, t: number}>(
-        (prev, curr) => { 
-            const loserPoints = Math.min(curr.gm ?? 1000, curr.jv ?? 1000, curr.h ?? 1000, curr.t ?? 1000);
-
-            if(loserPoints === 1000)
-                return prev;
-
-            return { jv: (curr.jv == loserPoints ? prev.jv + 1 : prev.jv), gm: (curr.gm == loserPoints ? prev.gm + 1 : prev.gm), h: (curr.h == loserPoints ? prev.h + 1 : prev.h), t: (curr.t == loserPoints ? prev.t + 1 : prev.t) };
-        },
-        { jv: 0, gm: 0, h: 0, t: 0 }
-    );
-
-    const timesAbsent = gamesQuery.data?.reduce<{ jv: number, gm: number, h: number, t: number}>(
-        (prev, curr) => { 
-            return { jv: (curr.jv ? prev.jv : prev.jv + 1), gm: (curr.gm ? prev.gm : prev.gm + 1), h: (curr.h ? prev.h : prev.h + 1), t: (curr.t ? prev.t : prev.t + 1) };
-        },
-        { jv: 0, gm: 0, h: 0, t: 0 }
-    );
-
-    const timesPerMap = gamesQuery.data?.reduce<Record<number, number>>(
-        (prev, curr) => { 
-            return { ...prev, [curr.map]: (prev[curr.map] ?? 0) + 1 };
-        },
-        {}
-    );
+    const timesPlayedPerMap = calculateTimesPlayedPerMap(gamesQuery.data);
     
     return (
       <Container maxWidth="xl" sx={{marginTop: 5, minWidth: "600px" }}>
-        <Typography variant="h2" component="h2" sx={{ m: 1 }}>Stats</Typography>
+        <Typography variant="h2" component="h2" sx={{ m: 1 }}>Stats - Current Season</Typography>
         <Typography variant="h5" component="h5" sx={{ m: 1 }}>{`${gamesQuery.data?.length} games played`}</Typography>
         <Divider><Typography variant="h5" component="h5">Win rate (%)</Typography></Divider>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
@@ -117,7 +83,7 @@ function Stats() {
               maps.map(map => (
                 <ListItem key={map.id}>
                   <ListItemText
-                    primary={map.name + " " + ((timesPerMap?.[map.id]) ?? 0) + " times"}
+                    primary={map.name + " " + ((timesPlayedPerMap?.[map.id]) ?? 0) + " times"}
                   />
                 </ListItem>
               ))}
@@ -127,4 +93,4 @@ function Stats() {
     )
 }
 
-export default Stats;
+export default StatsCurrent;

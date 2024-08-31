@@ -10,10 +10,12 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from './ErrorPage.tsx'
-import Games from './Games.tsx'
+import GamesCurrent from './GamesCurrent.tsx'
+import GamesPrevious from './GamesPrevious.tsx'
 import Track from './Track.tsx'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import Stats from './Stats.tsx'
+import StatsCurrent from './StatsCurrent.tsx'
+import StatsPrevious from './StatsPrevious.tsx'
 
 const queryClient = new QueryClient()
 
@@ -30,15 +32,23 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Games />,
+        element: <GamesCurrent />,
       },
       {
         path: "track",
         element: <Track />,
       },
       {
-        path: "stats",
-        element: <Stats />,
+        path: "statsCurrent",
+        element: <StatsCurrent />,
+      },
+      {
+        path: "gamesPrevious",
+        element: <GamesPrevious />,
+      },
+      {
+        path: "statsPrevious",
+        element: <StatsPrevious />,
       },
     ]
   },

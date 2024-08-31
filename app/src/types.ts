@@ -49,7 +49,7 @@ export async function fetchGameScores(): Promise<GameScores[]> {
   return await response.json() as GameScores[];
 }
 
-export async function fetchGamesSeason(season: Number): Promise<Game[]> {
+export async function fetchGamesSeason(season: number): Promise<Game[]> {
   const response = await fetch(`/trackedgames/${season}`);
   if (!response.ok) {
     throw new Error('Fetch error ' + response.statusText);
@@ -58,7 +58,7 @@ export async function fetchGamesSeason(season: Number): Promise<Game[]> {
   return await response.json() as Game[];
 }
 
-export async function fetchGameScoresSeason(season: Number): Promise<GameScores[]> {
+export async function fetchGameScoresSeason(season: number): Promise<GameScores[]> {
   const response = await fetch(`/gamescores/${season}`);
   if (!response.ok) {
     throw new Error('Fetch error ' + response.statusText);

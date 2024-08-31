@@ -318,5 +318,61 @@ export const corporations = [
       startingResources: { M: 48 },
       startingProduction: {},
       verified: true
-    }
+    },
+    {
+      name: "Spire",
+      expansion: "Prelude",
+      tags: ["City", "Earth"],
+      startingResources: { M: 50, CD: 1 },
+      startingProduction: {},
+      verified: true
+    },
+    {
+      name: "Sagitta Frontier Services",
+      expansion: "Prelude",
+      tags: [],
+      startingResources: { M: 31, CDN: 1 },
+      startingProduction: { M: 2, E: 1},
+      verified: true
+    },
+    {
+      name: "Palladin Shipping",
+      expansion: "Prelude",
+      tags: ["Space"],
+      startingResources: { M: 36, T: 5 },
+      startingProduction: {},
+      verified: true
+    },
+    {
+      name: "Nirgal Enterprises",
+      expansion: "Prelude",
+      tags: ["Energy", "Plant", "Building"],
+      startingResources: { M: 30 },
+      startingProduction: { E: 1, P: 1, S: 1 },
+      verified: true
+    },
+    {
+      name: "Ecotec",
+      expansion: "Prelude",
+      tags: ["Microbe", "Plant"],
+      startingResources: { M: 42 },
+      startingProduction: { P: 1 },
+      verified: true
+    },
+    {
+      name: "Tycho Magnetics",
+      expansion: "Prelude",
+      tags: ["Energy", "Science"],
+      startingResources: { M: 42 },
+      startingProduction: { E: 1 },
+      verified: true
+    },
+    {
+      name: "Kuiper Cooperative",
+      expansion: "Prelude",
+      tags: ["Space", "Space"],
+      startingResources: { M: 33 },
+      startingProduction: { T: 1 },
+      verified: true
+    },
   ];

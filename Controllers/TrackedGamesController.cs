@@ -14,7 +14,7 @@ public class TrackedGamesController(TrackedGameService trackedGameService) : Con
             .OrderByDescending(g => g.StartedAt);
 
     [HttpGet("{season}")]
-    public async Task<IEnumerable<Models.TrackedGame>> Get(int season)
+    public async Task<IEnumerable<Models.TrackedGame>> GetSeason(int season)
         => (await trackedGameService.GetGamesSeason(season))
             .OrderByDescending(g => g.StartedAt);
 

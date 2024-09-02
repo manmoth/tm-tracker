@@ -31,6 +31,8 @@ public record TrackedGame : ITableEntity
 
     public bool Promos { get; set; } = true;
 
+    public bool MilestonesAndAwards { get; set; } = true;
+
     public bool Colonies { get; set; } = true;
 
     public bool VenusNext { get; set; } = false;

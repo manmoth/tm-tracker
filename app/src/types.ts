@@ -19,6 +19,7 @@ export interface Game {
   corporateEra: boolean;
   colonies: boolean;
   prelude: boolean;
+  milestonesAndAwards: boolean;
   venusNext: boolean;
   turmoil: boolean;
 }

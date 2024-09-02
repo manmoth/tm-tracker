@@ -14,6 +14,7 @@ interface NewGame {
   promos: boolean;
   prelude: boolean;
   corporateEra: boolean;
+  milestonesAndAwards: boolean;
   colonies: boolean;
   venusNext: boolean;
   turmoil: boolean;
@@ -41,15 +42,16 @@ async function createOrUpdateGame(game: NewGame): Promise<NewGame> {
 function TrackGame() {
   const { control, handleSubmit } = useForm<NewGame>({
     defaultValues: {
-      drafting: false,
+      drafting: true,
       map: 1,
-      gm: false,
-      jv: false,
-      h: false,
-      t: false,
-      promos: false,
-      prelude: false,
-      corporateEra: false,
+      gm: true,
+      jv: true,
+      h: true,
+      t: true,
+      promos: true,
+      prelude: true,
+      corporateEra: true,
+      milestonesAndAwards: true,
       colonies: false,
       venusNext: false,
       turmoil: false
@@ -71,7 +73,7 @@ function TrackGame() {
         <Controller
           name="drafting"
           control={control}
-          render={({ field }) => <FormControlLabel control={<Checkbox {...field} />} label="Drafting" />}
+          render={({ field }) => <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Drafting" />}
         />
         <Controller
           name="map"
@@ -91,62 +93,68 @@ function TrackGame() {
           name="gm"
           control={control}
           render={({ field }) => 
-            <FormControlLabel control={<Checkbox {...field} />} label="GM" />}
+            <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="GM" />}
         />
         <Controller
           name="jv"
           control={control}
           render={({ field }) => 
-            <FormControlLabel control={<Checkbox {...field} />} label="JV" />}
+            <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="JV" />}
         />
         <Controller
           name="h"
           control={control}
           render={({ field }) => 
-            <FormControlLabel control={<Checkbox {...field} />} label="H" />}
+            <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="H" />}
         />
         <Controller
           name="t"
           control={control}
           render={({ field }) => 
-            <FormControlLabel control={<Checkbox {...field} />} label="T" />}
+            <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="T" />}
         />
         <Divider>Expansions</Divider>
         <Controller
           name="promos"
           control={control}
           render={({ field }) => 
-            <FormControlLabel control={<Checkbox {...field} />} label="Promos" />}
+            <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Promos" />}
         />
         <Controller
           name="prelude"
           control={control}
           render={({ field }) => 
-            <FormControlLabel control={<Checkbox {...field} />} label="Prelude" />}
+            <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Prelude" />}
         />
         <Controller
           name="corporateEra"
           control={control}
           render={({ field }) => 
-            <FormControlLabel control={<Checkbox {...field} />} label="Corporate Era" />}
+            <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Corporate Era" />}
+        />
+        <Controller
+          name="milestonesAndAwards"
+          control={control}
+          render={({ field }) => 
+            <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Milestones & Awards" />}
         />
         <Controller
           name="colonies"
           control={control}
           render={({ field }) => 
-            <FormControlLabel control={<Checkbox {...field} />} label="Colonies" />}
+            <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Colonies" />}
         />
         <Controller
           name="venusNext"
           control={control}
           render={({ field }) => 
-            <FormControlLabel control={<Checkbox {...field} />} label="Venus Next" />}
+            <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Venus Next" />}
         />
         <Controller
           name="turmoil"
           control={control}
           render={({ field }) => 
-            <FormControlLabel control={<Checkbox {...field} />} label="Turmoil" />}
+            <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Turmoil" />}
         />
         <Divider></Divider>
         <Button variant="outlined" color="primary" sx={{m: 1}} type="submit">

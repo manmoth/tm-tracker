@@ -390,7 +390,7 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
       setOpenSetCorpsModal(false);
     }
 
-    var expansionGridItems = [
+    const expansionGridItems = [
       game.promos && <Grid item key={"promos"} xs={6}>{RenderExpansion("Promos", game.promos)}</Grid>,
       game.corporateEra && <Grid item key={"corpEra"} xs={6}>{RenderExpansion("Corporate Era", game.corporateEra)}</Grid>,
       game.prelude && <Grid item key={"prelude"} xs={6}>{RenderExpansion("Prelude", game.prelude)}</Grid>,

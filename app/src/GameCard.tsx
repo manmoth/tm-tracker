@@ -390,6 +390,16 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
       setOpenSetCorpsModal(false);
     }
 
+    var expansionGridItems = [
+      game.promos && <Grid item key={"promos"} xs={6}>{RenderExpansion("Promos", game.promos)}</Grid>,
+      game.corporateEra && <Grid item key={"corpEra"} xs={6}>{RenderExpansion("Corporate Era", game.corporateEra)}</Grid>,
+      game.prelude && <Grid item key={"prelude"} xs={6}>{RenderExpansion("Prelude", game.prelude)}</Grid>,
+      game.milestonesAndAwards && <Grid item key={"milestonesAndAwards"} xs={6}>{RenderExpansion("Milestones & Awards", game.milestonesAndAwards)}</Grid>,
+      game.colonies && <Grid item key={"colonies"} xs={6}>{RenderExpansion("Colonies", game.colonies)}</Grid>,
+      game.venusNext && <Grid item key={"venusNext"} xs={6}>{RenderExpansion("Venus Next", game.venusNext)}</Grid>,
+      game.turmoil && <Grid item key={"turmoil"} xs={6}>{RenderExpansion("Turmoil", game.turmoil)}</Grid>,
+    ].filter(item => !!item);
+
     return (
     <Paper elevation={8} square={false} sx={{m:6}}>    
       {!game.ended && 
@@ -438,12 +448,7 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
       </Grid>
       <Divider>Expansions</Divider>
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
-        <Grid item key={"promos"} xs={4}>{RenderExpansion("Promos", game.promos)}</Grid>
-        <Grid item key={"corpEra"} xs={4}>{RenderExpansion("Corporate Era", game.corporateEra)}</Grid>
-        <Grid item key={"prelude"} xs={4}>{RenderExpansion("Prelude", game.prelude)}</Grid>
-        <Grid item key={"colonies"} xs={4}>{RenderExpansion("Colonies", game.colonies)}</Grid>
-        <Grid item key={"venusNext"} xs={4}>{RenderExpansion("Venus Next", game.venusNext)}</Grid>
-        <Grid item key={"turmoil"} xs={4}>{RenderExpansion("Turmoil", game.turmoil)}</Grid>
+        {expansionGridItems.length > 0 ? expansionGridItems : <Grid item key={"promos"} xs={12}><Typography variant="h6" component="h6" fontSize={14} sx={{ m: 1 }}>No expansions</Typography></Grid>}
       </Grid>
   
     </Paper>);

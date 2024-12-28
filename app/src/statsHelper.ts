@@ -54,3 +54,12 @@ export function calculateTimesPlayedPerMap(games: Game[] | undefined): Record<nu
         {}
     );
 }
+
+export const formatPercentOrNa = (num: number | undefined) => {
+    if(!num) {
+        return "N/A";
+    }
+    else {
+        return num.toFixed(1) + "%";
+    }
+}

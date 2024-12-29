@@ -2,7 +2,7 @@ import { Container, Divider, Grid, List, ListItem, ListItemText, Typography } fr
 import { useQuery } from "react-query";
 import { maps } from "./maps";
 import { fetchGameScores, fetchGames } from "./types";
-import { calculateTimesPlayed, calculateGamesWon, calculateGamesLast, calculateTimeAbsent, calculateTimesPlayedPerMap } from "./statsHelper";
+import { calculateTimesPlayed, calculateGamesWon, calculateGamesLast, calculateTimeAbsent, calculateTimesPlayedPerMap, formatPercentOrNa } from "./statsHelper";
 
 function StatsCurrent() {
     const gamesQuery = useQuery({ queryKey: ['games'], queryFn: fetchGames })
@@ -32,7 +32,7 @@ function StatsCurrent() {
           .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
           .map(({ name, percent }) => (<Grid item key={`player_${name}`} xs={3}>
               <Typography variant="h6" component="h6" sx={{ m: 1 }}>{`${name}`}</Typography>
-              <Typography variant="h6" component="h6" sx={{ m: 1 }}>{percent.toFixed(1) + "%" ?? "N/A"}</Typography>
+              <Typography variant="h6" component="h6" sx={{ m: 1 }}>{formatPercentOrNa(percent)}</Typography>
             </Grid>
           ))}
         </Grid>
@@ -42,7 +42,7 @@ function StatsCurrent() {
           .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
           .map(({ name, percent }) => (<Grid item key={`player_${name}`} xs={3}>
               <Typography variant="h6" component="h6" sx={{ m: 1 }}>{`${name}`}</Typography>
-              <Typography variant="h6" component="h6" sx={{ m: 1 }}>{percent.toFixed(1) + "%" ?? "N/A"}</Typography>
+              <Typography variant="h6" component="h6" sx={{ m: 1 }}>{formatPercentOrNa(percent)}</Typography>
             </Grid>
           ))}
         </Grid>

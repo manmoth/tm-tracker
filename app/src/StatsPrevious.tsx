@@ -2,7 +2,7 @@ import { Container, Divider, Grid, List, ListItem, ListItemText, Typography } fr
 import { useQuery } from "react-query";
 import { maps } from "./maps";
 import { fetchGameScoresSeason, fetchGamesSeason } from "./types";
-import { calculateTimesPlayed, calculateGamesWon, calculateGamesLast, calculateTimesPlayedPerMap } from "./statsHelper";
+import { calculateTimesPlayed, calculateGamesWon, calculateGamesLast, calculateTimesPlayedPerMap, formatPercentOrNa } from "./statsHelper";
 
 function StatsPrevious() {
     const season = 1;
@@ -35,7 +35,7 @@ function StatsPrevious() {
           .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
           .map(({ name, percent }) => (<Grid item key={`player_${name}`} xs={3}>
               <Typography variant="h6" component="h6" sx={{ m: 1 }}>{`${name}`}</Typography>
-              <Typography variant="h6" component="h6" sx={{ m: 1 }}>{percent.toFixed(1) + "%" ?? "N/A"}</Typography>
+              <Typography variant="h6" component="h6" sx={{ m: 1 }}>{formatPercentOrNa(percent)}</Typography>
             </Grid>
           ))}
         </Grid>
@@ -45,7 +45,7 @@ function StatsPrevious() {
           .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
           .map(({ name, percent }) => (<Grid item key={`player_${name}`} xs={3}>
               <Typography variant="h6" component="h6" sx={{ m: 1 }}>{`${name}`}</Typography>
-              <Typography variant="h6" component="h6" sx={{ m: 1 }}>{percent.toFixed(1) + "%" ?? "N/A"}</Typography>
+              <Typography variant="h6" component="h6" sx={{ m: 1 }}>{formatPercentOrNa(percent)}</Typography>
             </Grid>
           ))}
         </Grid>

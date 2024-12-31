@@ -21,6 +21,8 @@ function StatsCurrent() {
     const timesAbsent = calculateTimeAbsent(gamesQuery.data);
 
     const timesPlayedPerMap = calculateTimesPlayedPerMap(gamesQuery.data);
+
+    const calcPercent = (instances: number | undefined, totalTimes: number | undefined) => !totalTimes ? 0 : ((instances ?? 0) / totalTimes) * 100;
     
     return (
       <Container maxWidth="xl" sx={{marginTop: 5, minWidth: "600px" }}>
@@ -28,7 +30,7 @@ function StatsCurrent() {
         <Typography variant="h5" component="h5" sx={{ m: 1 }}>{`${gamesQuery.data?.length} games played`}</Typography>
         <Divider><Typography variant="h5" component="h5">Win rate (%)</Typography></Divider>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
-          {gamesWon && timesPlayed && [{ name: "JV", percent: (gamesWon.jv / timesPlayed.jv) * 100 }, { name: "GM", percent: (gamesWon.gm / timesPlayed.gm) * 100 }, { name: "H", percent: (gamesWon.h / timesPlayed.h) * 100 }, { name: "T", percent: (gamesWon.t / timesPlayed.t) * 100 }]
+          {gamesWon && timesPlayed && [{ name: "JV", percent: calcPercent(gamesWon.jv, timesPlayed.jv) }, { name: "GM", percent: calcPercent(gamesWon.gm, timesPlayed.gm) }, { name: "H", percent: calcPercent(gamesWon.h, timesPlayed.h) }, { name: "T", percent: calcPercent(gamesWon.t, timesPlayed.t) }]
           .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
           .map(({ name, percent }) => (<Grid item key={`player_${name}`} xs={3}>
               <Typography variant="h6" component="h6" sx={{ m: 1 }}>{`${name}`}</Typography>
@@ -38,7 +40,7 @@ function StatsCurrent() {
         </Grid>
         <Divider><Typography variant="h5" component="h5">Last rate (%)</Typography></Divider>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
-          {gamesLast && timesPlayed && [{ name: "JV", percent: (gamesLast.jv / timesPlayed.jv) * 100 }, { name: "GM", percent: (gamesLast.gm / timesPlayed.gm) * 100 }, { name: "H", percent: (gamesLast.h / timesPlayed.h) * 100 }, { name: "T", percent: (gamesLast.t / timesPlayed.t) * 100 }]
+        {gamesLast && timesPlayed && [{ name: "JV", percent: calcPercent(gamesLast.jv, timesPlayed.jv) }, { name: "GM", percent: calcPercent(gamesLast.gm, timesPlayed.gm) }, { name: "H", percent: calcPercent(gamesLast.h, timesPlayed.h) }, { name: "T", percent: calcPercent(gamesLast.t, timesPlayed.t) }]
           .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
           .map(({ name, percent }) => (<Grid item key={`player_${name}`} xs={3}>
               <Typography variant="h6" component="h6" sx={{ m: 1 }}>{`${name}`}</Typography>

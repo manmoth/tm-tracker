@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Chip, Divider, FormControlLabel, Grid, Modal, Paper, TextField, Typography } from "@mui/material";
+import { Autocomplete, Box, Button, Checkbox, Chip, Divider, FormControlLabel, Grid, Modal, Paper, TextField, Typography } from "@mui/material";
 import MapIcon from '@mui/icons-material/Map';
 import LoopIcon from '@mui/icons-material/Loop';
 import { maps } from "./maps";
@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Control, Controller, SubmitHandler, UseFormHandleSubmit, useForm } from "react-hook-form";
 import { Game, GameScores } from "./types";
 import { corporations } from "./corporations";
+import { calculateGameResult } from "./statsHelper";
 
 async function endGame(game: Game) {
   game.ended = true;
@@ -51,14 +52,10 @@ async function updateGame(game: Game) {
   return;
 }
 
-function isTopScore(score?: number, scores?: GameScores) {
-  return score === Math.max(scores?.jv ?? 0, scores?.h ?? 0, scores?.gm ?? 0, scores?.t ?? 0);
-}
-
-function RenderScore(name: string, corp: string, score?: number, isTopScore?: boolean) {
+function RenderScore(name: string, corp: string, score?: number, isWinner?: boolean, isLast?: boolean) {
   return <>
       <Typography variant="h5" component="h5" sx={{ m: 1 }}>{`👨‍🚀${name}`}</Typography>
-      <Typography variant="h5" component="h5" sx={{ m: 1 }}>{isTopScore ? "🏆" : ""}{score ?? "N/A"}</Typography>
+      <Typography variant="h5" component="h5" sx={{ m: 1 }}>{isWinner ? "🏆" : (isLast ? "💩" : "")}{score ?? "N/A"}</Typography>
       <Typography variant="h6" component="h6" fontSize={14} sx={{ m: 1 }}>{`${corp || ""}`}</Typography>
   </>;
 }
@@ -130,9 +127,13 @@ function RenderSetGameScoresModal(
   const onSubmit: SubmitHandler<GameScores> = async (data) => {
     const submittedScores = {
       gm: game.gm ? data.gm : undefined,
+      gmWonTieBreaker:  game.gm ? data.gmWonTieBreaker : undefined,
       jv: game.jv ? data.jv : undefined,
+      jvWonTieBreaker:  game.jv ? data.jvWonTieBreaker : undefined,
       h: game.h ? data.h : undefined,
-      t: game.t ? data.t : undefined
+      hWonTieBreaker:  game.h ? data.hWonTieBreaker : undefined,
+      t: game.t ? data.t : undefined,
+      tWonTieBreaker:  game.t ? data.tWonTieBreaker : undefined,
     };
 
     await setScores({...submittedScores, gameId: game.id}); await gamesQuery();
@@ -150,38 +151,100 @@ function RenderSetGameScoresModal(
         <Box sx={modalStyle}>
           <form onSubmit={handleSubmit(onSubmit)}>
 
-          { game.gm &&
-          <Controller
-            name="gm"
-            control={control}
-            render={({ field }) => 
-              <FormControlLabel control={<TextField {...field} type="number" />} label="GM" />}
-          />
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
+          { game.gm && <Grid item key="player_gm" xs={11}>
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 2, sm: 2, md: 2 }}>
+                <Grid item key="player_score" xs={2}>
+                  <Typography sx={{ m: 1 }}>{"GM"}</Typography>
+                </Grid>
+                <Grid item key="player_score" xs={6}>
+                  <Controller
+                    name="gm"
+                    control={control}
+                    render={({ field }) => <TextField {...field} type="number" />}
+                  />
+                </Grid>
+                <Grid item key="player_tb" xs={4}>
+                  <Controller
+                    name="gmWonTieBreaker"
+                    control={control}
+                    render={({ field }) => 
+                      <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Won tie-breaker?" />}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
           }
-          { game.h &&
-          <Controller
-            name="h"
-            control={control}
-            render={({ field }) => 
-              <FormControlLabel control={<TextField {...field} type="number" />} label="H" />}
-          />
+          { game.h && <Grid item key="player_h" xs={11}>
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 2, sm: 2, md: 2 }}>
+                <Grid item key="player_score" xs={2}>
+                  <Typography sx={{ m: 1 }}>{"H"}</Typography>
+                </Grid>
+                <Grid item key="player_score" xs={6}>
+                  <Controller
+                    name="h"
+                    control={control}
+                    render={({ field }) => <TextField {...field} type="number" />}
+                  />
+                </Grid>
+                <Grid item key="player_tb" xs={4}>
+                  <Controller
+                    name="hWonTieBreaker"
+                    control={control}
+                    render={({ field }) => 
+                      <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Won tie-breaker?" />}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
           }
-          { game.jv &&
-          <Controller
-            name="jv"
-            control={control}
-            render={({ field }) => 
-              <FormControlLabel control={<TextField {...field} type="number" />} label="JV" />}
-          />
+          { game.jv && <Grid item key="player_jv" xs={11}>
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 2, sm: 2, md: 2 }}>
+                <Grid item key="player_score" xs={2}>
+                  <Typography sx={{ m: 1 }}>{"JV"}</Typography>
+                </Grid>
+                <Grid item key="player_score" xs={6}>
+                  <Controller
+                    name="jv"
+                    control={control}
+                    render={({ field }) => <TextField {...field} type="number" />}
+                  />
+                </Grid>
+                <Grid item key="player_tb" xs={4}>
+                  <Controller
+                    name="jvWonTieBreaker"
+                    control={control}
+                    render={({ field }) => 
+                      <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Won tie-breaker?" />}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
           }
-          { game.t &&
-          <Controller
-            name="t"
-            control={control}
-            render={({ field }) => 
-              <FormControlLabel control={<TextField {...field} type="number" />} label="T" />}
-          />
+          { game.t && <Grid item key="player_t" xs={11}>
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 2, sm: 2, md: 2 }}>
+                <Grid item key="player_score" xs={2}>
+                  <Typography sx={{ m: 1 }}>{"T"}</Typography>
+                </Grid>
+                <Grid item key="player_score" xs={6}>
+                  <Controller
+                    name="t"
+                    control={control}
+                    render={({ field }) => <TextField {...field} type="number" />}
+                  />
+                </Grid>
+                <Grid item key="player_tb" xs={4}>
+                  <Controller
+                    name="tWonTieBreaker"
+                    control={control}
+                    render={({ field }) => 
+                      <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Won tie-breaker?" />}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
           }
+          </Grid>
           <Divider></Divider>
           <Button variant="outlined" color="primary" sx={{m: 1}} type="submit">
             Submit
@@ -341,9 +404,13 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
     const { control: setGameScoresControl, handleSubmit: handleSubmitSetGameScores } = useForm<GameScores>({
       defaultValues: {
         gm: 0,
+        gmWonTieBreaker: false,
         jv: 0,
+        jvWonTieBreaker: false,
         h: 0,
+        hWonTieBreaker: false,
         t: 0,
+        tWonTieBreaker: false,
       },
     });
   
@@ -400,6 +467,8 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
       game.turmoil && <Grid item key={"turmoil"} xs={6}>{RenderExpansion("Turmoil", game.turmoil)}</Grid>,
     ].filter(item => !!item);
 
+    const gameResult = scores && calculateGameResult(scores);
+    
     return (
     <Paper elevation={8} square={false} sx={{m:6}}>    
       {!game.ended && 
@@ -437,13 +506,13 @@ function GameCard(props: { game: Game, scores?: GameScores, gamesQuery: () => Pr
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
         {
           [
-            { name: "JV", corp: game.corpJV, score: scores?.jv, played: game.jv },
-            { name: "H", corp: game.corpH, score: scores?.h, played: game.h },
-            { name: "GM", corp: game.corpGM, score: scores?.gm, played: game.gm },
-            { name: "T", corp: game.corpT, score: scores?.t, played: game.t }
+            { name: "JV", corp: game.corpJV, score: scores?.jv, played: game.jv, isWinner: gameResult?.jv.won, isLast: gameResult?.jv.last },
+            { name: "H", corp: game.corpH, score: scores?.h, played: game.h, isWinner: gameResult?.h.won, isLast: gameResult?.h.last },
+            { name: "GM", corp: game.corpGM, score: scores?.gm, played: game.gm, isWinner: gameResult?.gm.won, isLast: gameResult?.gm.last },
+            { name: "T", corp: game.corpT, score: scores?.t, played: game.t, isWinner: gameResult?.t.won, isLast: gameResult?.t.last }
           ]
           .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
-          .map(player => player.played && <Grid item key={`player_${player.name}`} xs={3}>{RenderScore(player.name, player.corp, game.ended ? player.score : undefined, isTopScore(player.score, scores))}</Grid>)
+          .map(player => player.played && <Grid item key={`player_${player.name}`} xs={3}>{RenderScore(player.name, player.corp, game.ended ? player.score : undefined, player.isWinner, player.isLast)}</Grid>)
         }
       </Grid>
       <Divider>Expansions</Divider>

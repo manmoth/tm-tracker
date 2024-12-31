@@ -27,4 +27,12 @@ public record GameScores : ITableEntity
     public int? GM { get; set; } = default!;
 
     public int? H { get; set; } = default!;
+
+    public bool? JVWonTieBreaker { get; set; } = default!;
+
+    public bool? TWonTieBreaker { get; set; } = default!;
+
+    public bool? HWonTieBreaker { get; set; } = default!;
+    
+    public bool? GMWonTieBreaker { get; set; } = default!;
 }

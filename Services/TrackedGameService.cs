@@ -119,7 +119,11 @@ public class TrackedGameService(TableServiceClient tableServiceClient, IHostEnvi
         if(entity is null)
             return;
 
-        await tableClient.UpdateEntityAsync(entity with { H = gameScores.H, JV = gameScores.JV, GM = gameScores.GM, T = gameScores.T }, entity.ETag);
+        await tableClient.UpdateEntityAsync(entity with { 
+                H = gameScores.H, JV = gameScores.JV, GM = gameScores.GM, T = gameScores.T, 
+                HWonTieBreaker = gameScores.HWonTieBreaker, JVWonTieBreaker = gameScores.JVWonTieBreaker,
+                GMWonTieBreaker = gameScores.GMWonTieBreaker, TWonTieBreaker = gameScores.TWonTieBreaker
+            }, entity.ETag);
     }
 
     public async Task<IEnumerable<Models.GameScores>> GetGameScoresSeason(int season)

@@ -27,9 +27,13 @@ export interface Game {
 export interface GameScores {
   gameId: string;
   jv?: number;
+  jvWonTieBreaker?: boolean;
   h?: number;
+  hWonTieBreaker?: boolean;
   gm?: number;
+  gmWonTieBreaker?: boolean;
   t?: number;
+  tWonTieBreaker?: boolean;
 }
 
 export async function fetchGames(): Promise<Game[]> {

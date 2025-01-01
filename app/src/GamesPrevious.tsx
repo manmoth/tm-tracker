@@ -4,9 +4,9 @@ import GameCard from "./GameCard";
 import { Game, fetchGameScoresSeason, fetchGamesSeason } from "./types";
 
 function GamesPrevious() {
-  const season = 1;
-  const gamesQuery = useQuery({ queryKey: ['games'], queryFn: () => fetchGamesSeason(1) })
-  const gameScoresQuery = useQuery({ queryKey: ['gameScores'], queryFn: () => fetchGameScoresSeason(1) })
+  const season = 2;
+  const gamesQuery = useQuery({ queryKey: ['games'], queryFn: () => fetchGamesSeason(season) })
+  const gameScoresQuery = useQuery({ queryKey: ['gameScores'], queryFn: () => fetchGameScoresSeason(season) })
 
   if (gamesQuery.isLoading || gameScoresQuery.isLoading) {
     return <span>Loading...</span>

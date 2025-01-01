@@ -5,7 +5,7 @@ import { fetchGameScoresSeason, fetchGamesSeason } from "./types";
 import { calculateTimesPlayed, calculateGamesWon, calculateGamesLast, calculateTimesPlayedPerMap, formatPercentOrNa } from "./statsHelper";
 
 function StatsPrevious() {
-    const season = 1;
+    const season = 2;
     const gamesQuery = useQuery({ queryKey: ['games'], queryFn: () => fetchGamesSeason(season) })
     const gameScoresQuery = useQuery({ queryKey: ['gameScores'], queryFn: () => fetchGameScoresSeason(season) })
   
@@ -28,7 +28,7 @@ function StatsPrevious() {
 
     return (
       <Container maxWidth="xl" sx={{marginTop: 5, minWidth: "600px" }}>
-        <Typography variant="h2" component="h2" sx={{ m: 1 }}>{`Stats - Season ${1}`}</Typography>
+        <Typography variant="h2" component="h2" sx={{ m: 1 }}>{`Stats - Season ${season}`}</Typography>
         <Typography variant="h5" component="h5" sx={{ m: 1 }}>{`${gamesQuery.data?.length} games played`}</Typography>
         <Typography variant="h5" component="h5" sx={{ m: 1 }}>{`${firstGame && new Date(firstGame?.startedAt).toDateString()} to ${lastGame && new Date(lastGame?.startedAt).toDateString()}`}</Typography>
         <Divider><Typography variant="h5" component="h5">Win rate (%)</Typography></Divider>

@@ -1,5 +1,7 @@
 import { Game, GameScores } from "./types";
 
+export const calcPercent = (instances: number | undefined, totalTimes: number | undefined) => !totalTimes ? 0 : ((instances ?? 0) / totalTimes) * 100;
+
 export function calculateGameResult(gameScores: GameScores): { jv: { won: boolean; last: boolean; }, h: { won: boolean; last: boolean; }, gm: { won: boolean; last: boolean; }, t: { won: boolean; last: boolean; }} | undefined  {
     const allPoints = [gameScores.jv, gameScores.gm, gameScores.t, gameScores.h];
     const allValidPoints = allPoints.map(v => v ?? 0).filter(v => v > 0);
@@ -94,4 +96,33 @@ export const formatPercentOrNa = (num: number | undefined) => {
     else {
         return num.toFixed(1) + "%";
     }
+}
+
+export function calculateAvgPoints(gameScores: GameScores[] | undefined) {
+
+    const isXPlayerGame = (gameScores: GameScores, x: number) => [gameScores.gm, gameScores.jv, gameScores.h, gameScores.t].filter(v => v !== undefined && v !== null).length === x; 
+    const threePlayerGameScores = gameScores?.filter(g => isXPlayerGame(g, 3));
+    const fourPlayerGameScores = gameScores?.filter(g => isXPlayerGame(g, 4));
+
+    interface SumAndCount { sum: number; count: number }
+    const addGameToSumAndCount = (gameScore: number | undefined, sumAndCount: SumAndCount) => gameScore ? { sum: sumAndCount.sum + gameScore, count: sumAndCount.count + 1 } : sumAndCount;
+
+    const scoresPerPlayer = (gameScores: GameScores[] | undefined) => gameScores?.reduce<{ jv: SumAndCount, gm: SumAndCount, h: SumAndCount, t: SumAndCount}>(
+        (prev, curr) => ({ 
+                jv: addGameToSumAndCount(curr.jv, prev.jv), 
+                gm: addGameToSumAndCount(curr.gm, prev.gm), 
+                h: addGameToSumAndCount(curr.h, prev.h), 
+                t: addGameToSumAndCount(curr.t, prev.t) 
+            }),
+        { jv: { sum: 0, count: 0 }, gm: { sum: 0, count: 0 }, h: { sum: 0, count: 0 }, t: { sum: 0, count: 0 } }
+    );
+
+     
+    const threePlayerSumAndCounts = scoresPerPlayer(threePlayerGameScores);
+    const fourPlayerSumAndCounts = scoresPerPlayer(fourPlayerGameScores);
+
+    console.log(gameScores);
+    console.log(threePlayerGameScores);
+    console.log(threePlayerSumAndCounts);
+    console.log(fourPlayerSumAndCounts);
 }

@@ -2,7 +2,7 @@ import { Container, Divider, Grid, List, ListItem, ListItemText, Typography } fr
 import { useQuery } from "react-query";
 import { maps } from "./maps";
 import { fetchGameScoresSeason, fetchGamesSeason } from "./types";
-import { calculateTimesPlayed, calculateGamesWon, calculateGamesLast, calculateTimesPlayedPerMap, formatPercentOrNa } from "./statsHelper";
+import { calculateTimesPlayed, calculateGamesWon, calculateGamesLast, calculateTimesPlayedPerMap, formatPercentOrNa, calcPercent } from "./statsHelper";
 
 function StatsPrevious() {
     const season = 2;
@@ -23,8 +23,6 @@ function StatsPrevious() {
     
     const firstGame = gamesQuery.data?.sort((a, b) => new Date(a.startedAt).getTime() - new Date(b.startedAt).getTime())[0];
     const lastGame = gamesQuery.data?.sort((a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime())[0];
-
-    const calcPercent = (instances: number | undefined, totalTimes: number | undefined) => !totalTimes ? 0 : ((instances ?? 0) / totalTimes) * 100;
 
     return (
       <Container maxWidth="xl" sx={{marginTop: 5, minWidth: "600px" }}>

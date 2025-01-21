@@ -2,7 +2,7 @@ import { Container, Divider, Grid, List, ListItem, ListItemText, Typography } fr
 import { useQuery } from "react-query";
 import { maps } from "./maps";
 import { fetchGameScores, fetchGames } from "./types";
-import { calculateTimesPlayed, calculateGamesWon, calculateGamesLast, calculateTimeAbsent, calculateTimesPlayedPerMap, formatPercentOrNa } from "./statsHelper";
+import { calculateTimesPlayed, calculateGamesWon, calculateGamesLast, calculateTimeAbsent, calculateTimesPlayedPerMap, formatPercentOrNa, calcPercent, calculateAvgPoints } from "./statsHelper";
 
 function StatsCurrent() {
     const gamesQuery = useQuery({ queryKey: ['games'], queryFn: fetchGames })
@@ -21,8 +21,8 @@ function StatsCurrent() {
     const timesAbsent = calculateTimeAbsent(gamesQuery.data);
 
     const timesPlayedPerMap = calculateTimesPlayedPerMap(gamesQuery.data);
-
-    const calcPercent = (instances: number | undefined, totalTimes: number | undefined) => !totalTimes ? 0 : ((instances ?? 0) / totalTimes) * 100;
+    
+    calculateAvgPoints(gameScoresQuery.data);
     
     return (
       <Container maxWidth="xl" sx={{marginTop: 5, minWidth: "600px" }}>

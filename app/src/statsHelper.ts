@@ -10,24 +10,25 @@ export function calculateGameResult(gameScores: GameScores): { jv: { won: boolea
     const winnerPoints = Math.max(...allValidPoints);
     const lastPoints = Math.min(...allValidPoints);
 
-    const isTieBreaker = allValidPoints.filter(v => v === winnerPoints).length >= 2;
+    const isWinTieBreaker = allValidPoints.filter(v => v === winnerPoints).length >= 2;
+    const isLastTieBreaker = allValidPoints.filter(v => v === lastPoints).length >= 2;
 
     return {
         jv: {
-            won: winnerPoints === gameScores.jv && (!isTieBreaker || !!gameScores.jvWonTieBreaker),
-            last: lastPoints === gameScores.jv
+            won: winnerPoints === gameScores.jv && (!isWinTieBreaker || !!gameScores.jvWonTieBreaker),
+            last: lastPoints === gameScores.jv && (!isLastTieBreaker || !gameScores.jvWonTieBreaker),
         },
         gm: {
-            won: winnerPoints === gameScores.gm && (!isTieBreaker || !!gameScores.gmWonTieBreaker),
-            last: lastPoints === gameScores.gm
+            won: winnerPoints === gameScores.gm && (!isWinTieBreaker || !!gameScores.gmWonTieBreaker),
+            last: lastPoints === gameScores.gm && (!isLastTieBreaker || !gameScores.gmWonTieBreaker),
         },
         h: {
-            won: winnerPoints === gameScores.h && (!isTieBreaker || !!gameScores.hWonTieBreaker),
-            last: lastPoints === gameScores.h
+            won: winnerPoints === gameScores.h && (!isWinTieBreaker || !!gameScores.hWonTieBreaker),
+            last: lastPoints === gameScores.h && (!isLastTieBreaker || !gameScores.hWonTieBreaker),
         },
         t: {
-            won: winnerPoints === gameScores.t && (!isTieBreaker || !!gameScores.tWonTieBreaker),
-            last: lastPoints === gameScores.t
+            won: winnerPoints === gameScores.t && (!isWinTieBreaker || !!gameScores.tWonTieBreaker),
+            last: lastPoints === gameScores.t && (!isLastTieBreaker || !gameScores.tWonTieBreaker),
         }
     }
 }

@@ -1,4 +1,3 @@
-
 export interface Game {
   id: string;
   map: number;
@@ -23,7 +22,7 @@ export interface Game {
   venusNext: boolean;
   turmoil: boolean;
 }
-  
+
 export interface GameScores {
   gameId: string;
   jv?: number;
@@ -39,35 +38,37 @@ export interface GameScores {
 export async function fetchGames(): Promise<Game[]> {
   const response = await fetch("/trackedgames");
   if (!response.ok) {
-    throw new Error('Fetch error ' + response.statusText);
+    throw new Error("Fetch error " + response.statusText);
   }
 
-  return await response.json() as Game[];
+  return (await response.json()) as Game[];
 }
 
 export async function fetchGameScores(): Promise<GameScores[]> {
   const response = await fetch("/gamescores");
   if (!response.ok) {
-    throw new Error('Fetch error ' + response.statusText);
+    throw new Error("Fetch error " + response.statusText);
   }
 
-  return await response.json() as GameScores[];
+  return (await response.json()) as GameScores[];
 }
 
 export async function fetchGamesSeason(season: number): Promise<Game[]> {
   const response = await fetch(`/trackedgames/${season}`);
   if (!response.ok) {
-    throw new Error('Fetch error ' + response.statusText);
+    throw new Error("Fetch error " + response.statusText);
   }
 
-  return await response.json() as Game[];
+  return (await response.json()) as Game[];
 }
 
-export async function fetchGameScoresSeason(season: number): Promise<GameScores[]> {
+export async function fetchGameScoresSeason(
+  season: number,
+): Promise<GameScores[]> {
   const response = await fetch(`/gamescores/${season}`);
   if (!response.ok) {
-    throw new Error('Fetch error ' + response.statusText);
+    throw new Error("Fetch error " + response.statusText);
   }
 
-  return await response.json() as GameScores[];
+  return (await response.json()) as GameScores[];
 }

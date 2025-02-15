@@ -3,6 +3,7 @@ import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
 import pluginReactHooks from "eslint-plugin-react-hooks";
+import pluginReactRefresh from "eslint-plugin-react-refresh";
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -19,6 +20,7 @@ export default [
     },
   },
   pluginJs.configs.recommended,
+  pluginReactRefresh.configs.vite,
   ...tseslint.configs.recommended,
   {
     ...pluginReact.configs.flat.recommended,

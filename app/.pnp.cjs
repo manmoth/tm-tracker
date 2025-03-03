@@ -31,7 +31,7 @@ const RAW_RUNTIME_STATE =
           ["@emotion/styled", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:11.14.0"],\
           ["@eslint/js", "npm:9.20.0"],\
           ["@fontsource/roboto", "npm:5.1.1"],\
-          ["@mui/icons-material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:6.4.4"],\
+          ["@mui/icons-material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:6.4.6"],\
           ["@mui/material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:6.4.4"],\
           ["@types/react", "npm:18.3.18"],\
           ["@types/react-dom", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:18.3.5"],\
@@ -1012,17 +1012,17 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@mui/icons-material", [\
-      ["npm:6.4.4", {\
-        "packageLocation": "../../../.yarn/berry/cache/@mui-icons-material-npm-6.4.4-51ed8f7c37-10c0.zip/node_modules/@mui/icons-material/",\
+      ["npm:6.4.6", {\
+        "packageLocation": "../../../.yarn/berry/cache/@mui-icons-material-npm-6.4.6-c9b1a70b45-10c0.zip/node_modules/@mui/icons-material/",\
         "packageDependencies": [\
-          ["@mui/icons-material", "npm:6.4.4"]\
+          ["@mui/icons-material", "npm:6.4.6"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:6.4.4", {\
-        "packageLocation": "./.yarn/__virtual__/@mui-icons-material-virtual-a5dd43748c/4/.yarn/berry/cache/@mui-icons-material-npm-6.4.4-51ed8f7c37-10c0.zip/node_modules/@mui/icons-material/",\
+      ["virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:6.4.6", {\
+        "packageLocation": "./.yarn/__virtual__/@mui-icons-material-virtual-6fc0debe15/4/.yarn/berry/cache/@mui-icons-material-npm-6.4.6-c9b1a70b45-10c0.zip/node_modules/@mui/icons-material/",\
         "packageDependencies": [\
-          ["@mui/icons-material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:6.4.4"],\
+          ["@mui/icons-material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:6.4.6"],\
           ["@babel/runtime", "npm:7.26.7"],\
           ["@mui/material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:6.4.4"],\
           ["@types/mui__material", null],\
@@ -5413,7 +5413,7 @@ const RAW_RUNTIME_STATE =
           ["@emotion/styled", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:11.14.0"],\
           ["@eslint/js", "npm:9.20.0"],\
           ["@fontsource/roboto", "npm:5.1.1"],\
-          ["@mui/icons-material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:6.4.4"],\
+          ["@mui/icons-material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:6.4.6"],\
           ["@mui/material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:6.4.4"],\
           ["@types/react", "npm:18.3.18"],\
           ["@types/react-dom", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:18.3.5"],\

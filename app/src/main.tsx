@@ -10,7 +10,7 @@ import ErrorPage from "./ErrorPage.tsx";
 import GamesCurrent from "./GamesCurrent.tsx";
 import GamesPrevious from "./GamesPrevious.tsx";
 import Track from "./Track.tsx";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import StatsCurrent from "./StatsCurrent.tsx";
 import StatsPrevious from "./StatsPrevious.tsx";
 

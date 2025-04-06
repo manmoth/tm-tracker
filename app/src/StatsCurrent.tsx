@@ -7,7 +7,7 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { maps } from "./maps";
 import { fetchGameScores, fetchGames } from "./types";
 import {
@@ -71,7 +71,7 @@ function StatsCurrent() {
           ]
             .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
             .map(({ name, percent }) => (
-              <Grid item key={`player_${name}`} xs={3}>
+              <Grid key={`player_${name}`} size={{ xs: 3 }}>
                 <Typography
                   variant="h6"
                   component="h6"
@@ -99,7 +99,7 @@ function StatsCurrent() {
           ]
             .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
             .map(({ name, percent }) => (
-              <Grid item key={`player_${name}`} xs={3}>
+              <Grid key={`player_${name}`} size={{ xs: 3 }}>
                 <Typography
                   variant="h6"
                   component="h6"
@@ -126,7 +126,7 @@ function StatsCurrent() {
           ]
             .sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
             .map(({ name, count }) => (
-              <Grid item key={`player_${name}`} xs={3}>
+              <Grid key={`player_${name}`} size={{ xs: 3 }}>
                 <Typography
                   variant="h6"
                   component="h6"
@@ -153,7 +153,7 @@ function StatsCurrent() {
           ]
             .sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
             .map(({ name, count }) => (
-              <Grid item key={`player_${name}`} xs={3}>
+              <Grid key={`player_${name}`} size={{ xs: 3 }}>
                 <Typography
                   variant="h6"
                   component="h6"
@@ -180,7 +180,7 @@ function StatsCurrent() {
           ]
             .sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
             .map(({ name, count }) => (
-              <Grid item key={`player_${name}`} xs={3}>
+              <Grid key={`player_${name}`} size={{ xs: 3 }}>
                 <Typography
                   variant="h6"
                   component="h6"

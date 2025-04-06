@@ -7,7 +7,7 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { maps } from "./maps";
 import { fetchGameScoresSeason, fetchGamesSeason } from "./types";
 import {

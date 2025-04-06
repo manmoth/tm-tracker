@@ -214,16 +214,16 @@ function RenderSetGameScoresModal(
             columnSpacing={{ xs: 1, sm: 1, md: 1 }}
           >
             {game.gm && (
-              <Grid item key="player_gm" xs={11}>
+              <Grid key="player_gm" size={{ xs: 11 }}>
                 <Grid
                   container
                   rowSpacing={1}
                   columnSpacing={{ xs: 2, sm: 2, md: 2 }}
                 >
-                  <Grid item key="player_score" xs={2}>
+                  <Grid key="player_score" size={{ xs: 2 }}>
                     <Typography sx={{ m: 1 }}>{"GM"}</Typography>
                   </Grid>
-                  <Grid item key="player_score" xs={6}>
+                  <Grid key="player_score" size={{ xs: 6 }}>
                     <Controller
                       name="gm"
                       control={control}
@@ -232,7 +232,7 @@ function RenderSetGameScoresModal(
                       )}
                     />
                   </Grid>
-                  <Grid item key="player_tb" xs={4}>
+                  <Grid key="player_tb" size={{ xs: 4 }}>
                     <Controller
                       name="gmWonTieBreaker"
                       control={control}
@@ -250,16 +250,16 @@ function RenderSetGameScoresModal(
               </Grid>
             )}
             {game.h && (
-              <Grid item key="player_h" xs={11}>
+              <Grid key="player_h" size={{ xs: 11 }}>
                 <Grid
                   container
                   rowSpacing={1}
                   columnSpacing={{ xs: 2, sm: 2, md: 2 }}
                 >
-                  <Grid item key="player_score" xs={2}>
+                  <Grid key="player_score" size={{ xs: 2 }}>
                     <Typography sx={{ m: 1 }}>{"H"}</Typography>
                   </Grid>
-                  <Grid item key="player_score" xs={6}>
+                  <Grid key="player_score" size={{ xs: 6 }}>
                     <Controller
                       name="h"
                       control={control}
@@ -268,7 +268,7 @@ function RenderSetGameScoresModal(
                       )}
                     />
                   </Grid>
-                  <Grid item key="player_tb" xs={4}>
+                  <Grid key="player_tb" size={{ xs: 4 }}>
                     <Controller
                       name="hWonTieBreaker"
                       control={control}
@@ -286,16 +286,16 @@ function RenderSetGameScoresModal(
               </Grid>
             )}
             {game.jv && (
-              <Grid item key="player_jv" xs={11}>
+              <Grid key="player_jv" size={{ xs: 11 }}>
                 <Grid
                   container
                   rowSpacing={1}
                   columnSpacing={{ xs: 2, sm: 2, md: 2 }}
                 >
-                  <Grid item key="player_score" xs={2}>
+                  <Grid key="player_score" size={{ xs: 2 }}>
                     <Typography sx={{ m: 1 }}>{"JV"}</Typography>
                   </Grid>
-                  <Grid item key="player_score" xs={6}>
+                  <Grid key="player_score" size={{ xs: 6 }}>
                     <Controller
                       name="jv"
                       control={control}
@@ -304,7 +304,7 @@ function RenderSetGameScoresModal(
                       )}
                     />
                   </Grid>
-                  <Grid item key="player_tb" xs={4}>
+                  <Grid key="player_tb" size={{ xs: 4 }}>
                     <Controller
                       name="jvWonTieBreaker"
                       control={control}
@@ -322,16 +322,16 @@ function RenderSetGameScoresModal(
               </Grid>
             )}
             {game.t && (
-              <Grid item key="player_t" xs={11}>
+              <Grid key="player_t" size={{ xs: 11 }}>
                 <Grid
                   container
                   rowSpacing={1}
                   columnSpacing={{ xs: 2, sm: 2, md: 2 }}
                 >
-                  <Grid item key="player_score" xs={2}>
+                  <Grid key="player_score" size={{ xs: 2 }}>
                     <Typography sx={{ m: 1 }}>{"T"}</Typography>
                   </Grid>
-                  <Grid item key="player_score" xs={6}>
+                  <Grid key="player_score" size={{ xs: 6 }}>
                     <Controller
                       name="t"
                       control={control}
@@ -340,7 +340,7 @@ function RenderSetGameScoresModal(
                       )}
                     />
                   </Grid>
-                  <Grid item key="player_tb" xs={4}>
+                  <Grid key="player_tb" size={{ xs: 4 }}>
                     <Controller
                       name="tWonTieBreaker"
                       control={control}
@@ -627,37 +627,37 @@ function GameCard(props: {
 
   const expansionGridItems = [
     game.promos && (
-      <Grid item key={"promos"} xs={6}>
+      <Grid key={"promos"} size={{ xs: 6 }}>
         {RenderExpansion("Promos", game.promos)}
       </Grid>
     ),
     game.corporateEra && (
-      <Grid item key={"corpEra"} xs={6}>
+      <Grid key={"corpEra"} size={{ xs: 6 }}>
         {RenderExpansion("Corporate Era", game.corporateEra)}
       </Grid>
     ),
     game.prelude && (
-      <Grid item key={"prelude"} xs={6}>
+      <Grid key={"prelude"} size={{ xs: 6 }}>
         {RenderExpansion("Prelude", game.prelude)}
       </Grid>
     ),
     game.milestonesAndAwards && (
-      <Grid item key={"milestonesAndAwards"} xs={6}>
+      <Grid key={"milestonesAndAwards"} size={{ xs: 6 }}>
         {RenderExpansion("Milestones & Awards", game.milestonesAndAwards)}
       </Grid>
     ),
     game.colonies && (
-      <Grid item key={"colonies"} xs={6}>
+      <Grid key={"colonies"} size={{ xs: 6 }}>
         {RenderExpansion("Colonies", game.colonies)}
       </Grid>
     ),
     game.venusNext && (
-      <Grid item key={"venusNext"} xs={6}>
+      <Grid key={"venusNext"} size={{ xs: 6 }}>
         {RenderExpansion("Venus Next", game.venusNext)}
       </Grid>
     ),
     game.turmoil && (
-      <Grid item key={"turmoil"} xs={6}>
+      <Grid key={"turmoil"} size={{ xs: 6 }}>
         {RenderExpansion("Turmoil", game.turmoil)}
       </Grid>
     ),
@@ -809,7 +809,7 @@ function GameCard(props: {
           .map(
             (player) =>
               player.played && (
-                <Grid item key={`player_${player.name}`} xs={3}>
+                <Grid key={`player_${player.name}`} size={{ xs: 3 }}>
                   {RenderScore(
                     player.name,
                     player.corp,
@@ -826,7 +826,7 @@ function GameCard(props: {
         {expansionGridItems.length > 0 ? (
           expansionGridItems
         ) : (
-          <Grid item key={"promos"} xs={12}>
+          <Grid key={"promos"} size={{ xs: 12 }}>
             <Typography variant="h6" component="h6" fontSize={14} sx={{ m: 1 }}>
               No expansions
             </Typography>

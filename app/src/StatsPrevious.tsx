@@ -7,7 +7,7 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { maps } from "./maps";
 import { fetchGameScoresSeason, fetchGamesSeason } from "./types";
 import {
@@ -86,7 +86,7 @@ function StatsPrevious() {
           ]
             .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
             .map(({ name, percent }) => (
-              <Grid item key={`player_${name}`} xs={3}>
+              <Grid key={`player_${name}`} size={{ xs: 3 }}>
                 <Typography
                   variant="h6"
                   component="h6"
@@ -114,7 +114,7 @@ function StatsPrevious() {
           ]
             .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
             .map(({ name, percent }) => (
-              <Grid item key={`player_${name}`} xs={3}>
+              <Grid key={`player_${name}`} size={{ xs: 3 }}>
                 <Typography
                   variant="h6"
                   component="h6"

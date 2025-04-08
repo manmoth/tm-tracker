@@ -13,6 +13,7 @@ import Track from "./Track.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import StatsCurrent from "./StatsCurrent.tsx";
 import StatsPrevious from "./StatsPrevious.tsx";
+import Tips from "./Tips.tsx";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "statsPrevious",
         element: <StatsPrevious />,
+      },
+      {
+        path: "tips",
+        element: <Tips />,
       },
     ],
   },

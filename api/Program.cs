@@ -22,6 +22,7 @@ builder.Services.AddSingleton(mapperConfig);
 builder.Services.AddScoped<IMapper, ServiceMapper>();
 
 builder.Services.AddTransient<TrackedGameService>();
+builder.Services.AddTransient<AiTipsService>();
 
 builder.Services.AddSingleton(s => {
         var tableConnStr = s.GetRequiredService<IConfiguration>().GetValue<string>("ConnectionStrings:AzureCosmosDb");

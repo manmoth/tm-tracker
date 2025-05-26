@@ -1104,21 +1104,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.71.10":
-  version: 5.71.10
-  resolution: "@tanstack/query-core@npm:5.71.10"
-  checksum: 10c0/2b6a9c6b252c434cdf1048f9f82d1de27ff06dd67c5c76408bb028778f77308e245b043a55db7b012148e5fd9317ee176d8179caffa18cf4d35c5d721cd81346
+"@tanstack/query-core@npm:5.77.2":
+  version: 5.77.2
+  resolution: "@tanstack/query-core@npm:5.77.2"
+  checksum: 10c0/2c83a23f61443de054250f35f596345d0ed4731b2bf4218f2acbef224255d0d9a1e41547e56ec58db4da5a97942cdd829c5d7c3906fc4a23857dd16f4d4608de
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.71.10":
-  version: 5.71.10
-  resolution: "@tanstack/react-query@npm:5.71.10"
+"@tanstack/react-query@npm:^5.77.2":
+  version: 5.77.2
+  resolution: "@tanstack/react-query@npm:5.77.2"
   dependencies:
-    "@tanstack/query-core": "npm:5.71.10"
+    "@tanstack/query-core": "npm:5.77.2"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10c0/59275edfe5293fd0d825b4b048e4ceba890b5732a2ec5538d697296864498a647a51dc58fcebac5e36536d0ca7340deb0606870d86ffd4449933d368505b2ac4
+  checksum: 10c0/949d866ca8e1264ab506c7ac5ae11a596103a2f0c5cbf46022a22d256951791e330a8f126011cc6a73831514f889b87de11063d04f14014038375ae5a7ad3556
   languageName: node
   linkType: hard
 
@@ -4450,7 +4450,7 @@ __metadata:
     "@fontsource/roboto": "npm:^5.2.5"
     "@mui/icons-material": "npm:^7.0.1"
     "@mui/material": "npm:7.0.1"
-    "@tanstack/react-query": "npm:^5.71.10"
+    "@tanstack/react-query": "npm:^5.77.2"
     "@types/react": "npm:^19.1.4"
     "@types/react-dom": "npm:19.1.1"
     "@vitejs/plugin-react": "npm:^4.3.4"

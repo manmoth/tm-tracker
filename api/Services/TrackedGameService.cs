@@ -21,7 +21,8 @@ public class TrackedGameService(TableServiceClient tableServiceClient, IHostEnvi
 
     private static readonly IDictionary<int, (DateTimeOffset Start, DateTimeOffset End)> SeasonDates = new Dictionary<int, (DateTimeOffset Start, DateTimeOffset End)> {
         { 1, (new (2024, 4, 1, 0, 0, 0, TimeSpan.Zero), new (2024, 8, 31, 0, 0, 0, TimeSpan.Zero)) },
-        { 2, (new (2024, 9, 1, 0, 0, 0, TimeSpan.Zero), new (2025, 1, 1, 0, 0, 0, TimeSpan.Zero)) }
+        { 2, (new (2024, 9, 1, 0, 0, 0, TimeSpan.Zero), new (2025, 1, 1, 0, 0, 0, TimeSpan.Zero)) },
+        { 3, (new (2025,1, 2, 0, 0, 0, TimeSpan.Zero), new (2025, 6, 1, 0, 0, 0, TimeSpan,Zero)) }
     };
 
     private static readonly DateTimeOffset CurrentSeasonStart = SeasonDates.Max(s => s.Value.End);

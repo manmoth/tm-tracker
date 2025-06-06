@@ -19,7 +19,7 @@ import {
 } from "./statsHelper";
 
 function StatsPrevious() {
-  const season = 2;
+  const season = 3;
   const gamesQuery = useQuery({
     queryKey: ["games"],
     queryFn: () => fetchGamesSeason(season),

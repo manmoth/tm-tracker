@@ -4,7 +4,7 @@ import GameCard from "./GameCard";
 import { Game, fetchGameScoresSeason, fetchGamesSeason } from "./types";
 
 function GamesPrevious() {
-  const season = 2;
+  const season = 3;
   const gamesQuery = useQuery({
     queryKey: ["games"],
     queryFn: () => fetchGamesSeason(season),

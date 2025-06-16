@@ -3788,12 +3788,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.55.0":
-  version: 7.55.0
-  resolution: "react-hook-form@npm:7.55.0"
+"react-hook-form@npm:^7.58.0":
+  version: 7.58.0
+  resolution: "react-hook-form@npm:7.58.0"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
-  checksum: 10c0/9cff0da58d8223dd14e01ac83688e3546edc42cfa557974b6f2f09922ee051e4713fd53abb69c7a815bf3600142a14186b977d69d438da32f63475a8ecf6b452
+  checksum: 10c0/9e87bf1dfb43157ffec1b112092e8c5b2b9d0056c2a8bdea6c15e08d510b365915101f499f2e7698e16e94541ac82b26ab8e3b05af5b0cccfc82d29cf31c1b0b
   languageName: node
   linkType: hard
 
@@ -4506,7 +4506,7 @@ __metadata:
     prettier: "npm:3.5.3"
     react: "npm:^19.1.0"
     react-dom: "npm:19.1.0"
-    react-hook-form: "npm:^7.55.0"
+    react-hook-form: "npm:^7.58.0"
     react-router-dom: "npm:^7.6.1"
     typescript: "npm:^5.8.3"
     typescript-eslint: "npm:^8.29.0"

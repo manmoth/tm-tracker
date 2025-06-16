@@ -33,7 +33,7 @@ const RAW_RUNTIME_STATE =
           ["@fontsource/roboto", "npm:5.2.5"],\
           ["@mui/icons-material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:7.1.0"],\
           ["@mui/material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:7.0.1"],\
-          ["@tanstack/react-query", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:5.77.2"],\
+          ["@tanstack/react-query", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:5.80.7"],\
           ["@types/react", "npm:19.1.4"],\
           ["@types/react-dom", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:19.1.1"],\
           ["@vitejs/plugin-react", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:4.3.4"],\
@@ -1498,27 +1498,27 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@tanstack/query-core", [\
-      ["npm:5.77.2", {\
-        "packageLocation": "../../../.yarn/berry/cache/@tanstack-query-core-npm-5.77.2-7f24467f40-10c0.zip/node_modules/@tanstack/query-core/",\
+      ["npm:5.80.7", {\
+        "packageLocation": "../../../.yarn/berry/cache/@tanstack-query-core-npm-5.80.7-d2bfd9a810-10c0.zip/node_modules/@tanstack/query-core/",\
         "packageDependencies": [\
-          ["@tanstack/query-core", "npm:5.77.2"]\
+          ["@tanstack/query-core", "npm:5.80.7"]\
         ],\
         "linkType": "HARD"\
       }]\
     ]],\
     ["@tanstack/react-query", [\
-      ["npm:5.77.2", {\
-        "packageLocation": "../../../.yarn/berry/cache/@tanstack-react-query-npm-5.77.2-75ca2b7765-10c0.zip/node_modules/@tanstack/react-query/",\
+      ["npm:5.80.7", {\
+        "packageLocation": "../../../.yarn/berry/cache/@tanstack-react-query-npm-5.80.7-b457a836be-10c0.zip/node_modules/@tanstack/react-query/",\
         "packageDependencies": [\
-          ["@tanstack/react-query", "npm:5.77.2"]\
+          ["@tanstack/react-query", "npm:5.80.7"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:5.77.2", {\
-        "packageLocation": "./.yarn/__virtual__/@tanstack-react-query-virtual-cac3a5a27c/4/.yarn/berry/cache/@tanstack-react-query-npm-5.77.2-75ca2b7765-10c0.zip/node_modules/@tanstack/react-query/",\
+      ["virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:5.80.7", {\
+        "packageLocation": "./.yarn/__virtual__/@tanstack-react-query-virtual-b960aba6fc/4/.yarn/berry/cache/@tanstack-react-query-npm-5.80.7-b457a836be-10c0.zip/node_modules/@tanstack/react-query/",\
         "packageDependencies": [\
-          ["@tanstack/react-query", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:5.77.2"],\
-          ["@tanstack/query-core", "npm:5.77.2"],\
+          ["@tanstack/react-query", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:5.80.7"],\
+          ["@tanstack/query-core", "npm:5.80.7"],\
           ["@types/react", "npm:19.1.4"],\
           ["react", "npm:19.1.0"]\
         ],\
@@ -5356,7 +5356,7 @@ const RAW_RUNTIME_STATE =
           ["@fontsource/roboto", "npm:5.2.5"],\
           ["@mui/icons-material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:7.1.0"],\
           ["@mui/material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:7.0.1"],\
-          ["@tanstack/react-query", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:5.77.2"],\
+          ["@tanstack/react-query", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:5.80.7"],\
           ["@types/react", "npm:19.1.4"],\
           ["@types/react-dom", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:19.1.1"],\
           ["@vitejs/plugin-react", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:4.3.4"],\

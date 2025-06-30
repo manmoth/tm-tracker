@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Data.Tables" Version="12.11.0" />
-    <PackageReference Include="Azure.Identity" Version="1.14.0" />
+    <PackageReference Include="Azure.Identity" Version="1.14.1" />
     <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
     <PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="9.3.0-preview.1.25161.3" />

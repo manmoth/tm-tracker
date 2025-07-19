@@ -69,7 +69,7 @@ if (app.Environment.IsDevelopment())
 else 
 {
     app.UseDefaultFiles();
-    app.UseStaticFiles();
+    app.MapStaticAssets();
 }
 
 app.MapControllers();

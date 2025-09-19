@@ -14,4 +14,8 @@ WORKDIR /app
 COPY --from=build /source/out .
 COPY --from=build /source/client ./wwwroot
 
+ENV ASPNETCORE_HTTP_PORTS=80
+ENV ASPNETCORE_URLS=http://*:80
+EXPOSE 80
+
 ENTRYPOINT ["dotnet", "TmTracker.dll"]

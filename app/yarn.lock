@@ -662,10 +662,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/roboto@npm:^5.2.5":
-  version: 5.2.5
-  resolution: "@fontsource/roboto@npm:5.2.5"
-  checksum: 10c0/b254985468a3ba78323d66b0725af1b2dc60dbacc82a907c0f67ccc659cc30c52b66bbadd3f2afdea53971ddae60c96e582efbcaee2db52886201c3f56b830a8
+"@fontsource/roboto@npm:^5.2.8":
+  version: 5.2.8
+  resolution: "@fontsource/roboto@npm:5.2.8"
+  checksum: 10c0/b215a7e08d65063e9e1714e39c023f0a1f2d33f0d48f06edf4e0d09a8945f682dd39ca7089efb83a48ceffa20d92d65392297831198e9a694b5be8a96b1a40cd
   languageName: node
   linkType: hard
 
@@ -4578,7 +4578,7 @@ __metadata:
     "@emotion/react": "npm:^11.14.0"
     "@emotion/styled": "npm:^11.14.0"
     "@eslint/js": "npm:^9.35.0"
-    "@fontsource/roboto": "npm:^5.2.5"
+    "@fontsource/roboto": "npm:^5.2.8"
     "@mui/icons-material": "npm:^7.1.0"
     "@mui/material": "npm:7.0.1"
     "@tanstack/react-query": "npm:^5.81.5"

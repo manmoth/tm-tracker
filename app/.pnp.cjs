@@ -30,7 +30,7 @@ const RAW_RUNTIME_STATE =
           ["@emotion/react", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:11.14.0"],\
           ["@emotion/styled", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:11.14.0"],\
           ["@eslint/js", "npm:9.35.0"],\
-          ["@fontsource/roboto", "npm:5.2.5"],\
+          ["@fontsource/roboto", "npm:5.2.8"],\
           ["@mui/icons-material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:7.1.0"],\
           ["@mui/material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:7.0.1"],\
           ["@tanstack/react-query", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:5.81.5"],\
@@ -901,10 +901,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@fontsource/roboto", [\
-      ["npm:5.2.5", {\
-        "packageLocation": "../../../.yarn/berry/cache/@fontsource-roboto-npm-5.2.5-41eb51fe41-10c0.zip/node_modules/@fontsource/roboto/",\
+      ["npm:5.2.8", {\
+        "packageLocation": "../../../.yarn/berry/cache/@fontsource-roboto-npm-5.2.8-e199d559f7-10c0.zip/node_modules/@fontsource/roboto/",\
         "packageDependencies": [\
-          ["@fontsource/roboto", "npm:5.2.5"]\
+          ["@fontsource/roboto", "npm:5.2.8"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -5485,7 +5485,7 @@ const RAW_RUNTIME_STATE =
           ["@emotion/react", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:11.14.0"],\
           ["@emotion/styled", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:11.14.0"],\
           ["@eslint/js", "npm:9.35.0"],\
-          ["@fontsource/roboto", "npm:5.2.5"],\
+          ["@fontsource/roboto", "npm:5.2.8"],\
           ["@mui/icons-material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:7.1.0"],\
           ["@mui/material", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:7.0.1"],\
           ["@tanstack/react-query", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:5.81.5"],\

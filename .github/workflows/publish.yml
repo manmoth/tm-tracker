@@ -39,7 +39,7 @@ jobs:
           cmd: build
           dir: app/
       - name: Publish client dist artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: tm-tracker-client
           path: app/dist/

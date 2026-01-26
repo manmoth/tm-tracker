@@ -41,7 +41,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:9.39.2"],\
           ["eslint-plugin-react", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:7.37.5"],\
           ["eslint-plugin-react-hooks", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:5.2.0"],\
-          ["eslint-plugin-react-refresh", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:0.4.20"],\
+          ["eslint-plugin-react-refresh", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:0.4.26"],\
           ["globals", "npm:16.4.0"],\
           ["prettier", "npm:3.6.2"],\
           ["react", "npm:19.1.1"],\
@@ -3101,19 +3101,19 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["eslint-plugin-react-refresh", [\
-      ["npm:0.4.20", {\
-        "packageLocation": "../../../.yarn/berry/cache/eslint-plugin-react-refresh-npm-0.4.20-22e295405b-10c0.zip/node_modules/eslint-plugin-react-refresh/",\
+      ["npm:0.4.26", {\
+        "packageLocation": "../../../.yarn/berry/cache/eslint-plugin-react-refresh-npm-0.4.26-d49c61032e-10c0.zip/node_modules/eslint-plugin-react-refresh/",\
         "packageDependencies": [\
-          ["eslint-plugin-react-refresh", "npm:0.4.20"]\
+          ["eslint-plugin-react-refresh", "npm:0.4.26"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:0.4.20", {\
-        "packageLocation": "./.yarn/__virtual__/eslint-plugin-react-refresh-virtual-7d58e5ec09/4/.yarn/berry/cache/eslint-plugin-react-refresh-npm-0.4.20-22e295405b-10c0.zip/node_modules/eslint-plugin-react-refresh/",\
+      ["virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:0.4.26", {\
+        "packageLocation": "./.yarn/__virtual__/eslint-plugin-react-refresh-virtual-f1c0b87b0e/4/.yarn/berry/cache/eslint-plugin-react-refresh-npm-0.4.26-d49c61032e-10c0.zip/node_modules/eslint-plugin-react-refresh/",\
         "packageDependencies": [\
           ["@types/eslint", null],\
           ["eslint", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:9.39.2"],\
-          ["eslint-plugin-react-refresh", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:0.4.20"]\
+          ["eslint-plugin-react-refresh", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:0.4.26"]\
         ],\
         "packagePeers": [\
           "@types/eslint",\
@@ -5486,7 +5486,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:9.39.2"],\
           ["eslint-plugin-react", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:7.37.5"],\
           ["eslint-plugin-react-hooks", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:5.2.0"],\
-          ["eslint-plugin-react-refresh", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:0.4.20"],\
+          ["eslint-plugin-react-refresh", "virtual:f54a988afa1d8351ede722c65740474230e9f4d326f84ae310ed4e35dd222b136430f73e31270fc4bf47f4b045cf007615ea907d230129b54c85157731a65703#npm:0.4.26"],\
           ["globals", "npm:16.4.0"],\
           ["prettier", "npm:3.6.2"],\
           ["react", "npm:19.1.1"],\

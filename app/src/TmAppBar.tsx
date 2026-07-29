@@ -73,21 +73,6 @@ function TmAppBar() {
               Stats - Current
             </Typography>
           </Link>
-          <Link to={"tips"}>
-            <Typography
-              textAlign="center"
-              sx={{
-                mr: 2,
-                fontFamily: "monospace",
-                fontWeight: 300,
-                letterSpacing: ".1rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              Tips
-            </Typography>
-          </Link>
           <Link to={"gamesPrevious"}>
             <Typography
               textAlign="center"

@@ -35,13 +35,6 @@ export interface GameScores {
   tWonTieBreaker?: boolean;
 }
 
-export interface Tip {
-  textJv: string;
-  textH: string;
-  textGm: string;
-  textT: string;
-}
-
 export async function fetchGames(): Promise<Game[]> {
   const response = await fetch("/trackedgames");
   if (!response.ok) {
@@ -78,13 +71,4 @@ export async function fetchGameScoresSeason(
   }
 
   return (await response.json()) as GameScores[];
-}
-
-export async function fetchTip(): Promise<Tip> {
-  const response = await fetch(`/tips`);
-  if (!response.ok) {
-    throw new Error("Fetch error " + response.statusText);
-  }
-
-  return (await response.json()) as Tip;
 }

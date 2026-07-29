@@ -27,20 +27,14 @@ jobs:
           cache: yarn
           cache-dependency-path: './app/yarn.lock'
       - name: install
-        uses: borales/actions-yarn@v5
-        with:
-          cmd: install
-          dir: app/
+        run: corepack yarn install
+        working-directory: app
       - name: lint
-        uses: borales/actions-yarn@v5
-        with:
-          cmd: lint
-          dir: app/
+        run: corepack yarn lint
+        working-directory: app
       - name: build
-        uses: borales/actions-yarn@v5
-        with:
-          cmd: build
-          dir: app/
+        run: corepack yarn build
+        working-directory: app
       - name: Publish client dist artifact
         uses: actions/upload-artifact@v6
         with:

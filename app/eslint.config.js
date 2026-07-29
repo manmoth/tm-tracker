@@ -11,7 +11,7 @@ export default [
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
   },
   {
-    ignores: ["**/.yarn/"],
+    ignores: ["**/.yarn/", "**/.vscode/", "**/node_modules/", ".pnp.*"],
   },
   { languageOptions: { globals: globals.browser } },
   {

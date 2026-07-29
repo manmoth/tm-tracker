@@ -92,8 +92,10 @@ function RenderScore(
       <Typography
         variant="h6"
         component="h6"
-        fontSize={14}
-        sx={{ m: 1 }}
+        sx={{
+          fontSize: 14,
+          m: 1,
+        }}
       >{`${corp || ""}`}</Typography>
     </>
   );
@@ -748,7 +750,9 @@ function GameCard(props: {
         <Typography
           variant="h6"
           component="h6"
-          fontSize={14}
+          sx={{
+            fontSize: 14,
+          }}
         >{`Paused ${totalPausedMinutes}m`}</Typography>
       )}
       <Chip
@@ -827,7 +831,14 @@ function GameCard(props: {
           expansionGridItems
         ) : (
           <Grid key={"promos"} size={{ xs: 12 }}>
-            <Typography variant="h6" component="h6" fontSize={14} sx={{ m: 1 }}>
+            <Typography
+              variant="h6"
+              component="h6"
+              sx={{
+                fontSize: 14,
+                m: 1,
+              }}
+            >
               No expansions
             </Typography>
           </Grid>

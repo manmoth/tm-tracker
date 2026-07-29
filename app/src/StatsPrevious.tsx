@@ -131,7 +131,12 @@ function StatsPrevious() {
           Played map
         </Typography>
       </Divider>
-      <Grid container justifyContent="center">
+      <Grid
+        container
+        sx={{
+          justifyContent: "center",
+        }}
+      >
         <List>
           {maps.map((map) => (
             <ListItem key={map.id}>

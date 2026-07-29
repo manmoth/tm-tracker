@@ -30,8 +30,8 @@ function TmAppBar() {
           </Typography>
           <Link to={""}>
             <Typography
-              textAlign="center"
               sx={{
+                textAlign: "center",
                 mr: 2,
                 fontFamily: "monospace",
                 fontWeight: 300,
@@ -45,8 +45,8 @@ function TmAppBar() {
           </Link>
           <Link to={"track"}>
             <Typography
-              textAlign="center"
               sx={{
+                textAlign: "center",
                 mr: 2,
                 fontFamily: "monospace",
                 fontWeight: 300,
@@ -60,8 +60,8 @@ function TmAppBar() {
           </Link>
           <Link to={"statsCurrent"}>
             <Typography
-              textAlign="center"
               sx={{
+                textAlign: "center",
                 mr: 2,
                 fontFamily: "monospace",
                 fontWeight: 300,
@@ -75,8 +75,8 @@ function TmAppBar() {
           </Link>
           <Link to={"gamesPrevious"}>
             <Typography
-              textAlign="center"
               sx={{
+                textAlign: "center",
                 mr: 2,
                 fontFamily: "monospace",
                 fontWeight: 300,
@@ -90,8 +90,8 @@ function TmAppBar() {
           </Link>
           <Link to={"statsPrevious"}>
             <Typography
-              textAlign="center"
               sx={{
+                textAlign: "center",
                 mr: 2,
                 fontFamily: "monospace",
                 fontWeight: 300,
